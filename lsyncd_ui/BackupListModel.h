@@ -13,9 +13,11 @@ class BackupListModel : public QAbstractListModel
     Q_OBJECT
 public:
     BackupListModel();
+    virtual ~BackupListModel();
 
     enum BackupListModel_Roles {
-        ItemPath = Qt::DisplayRole + 1
+        ItemPathRole = Qt::DisplayRole + 1,
+        IsFileRole
     };
 
     // QAbstractItemModel interface
@@ -25,10 +27,10 @@ public:
     virtual QHash<int, QByteArray> roleNames() const;
 
 public:
-    //Q_INVOKABLE void addItems(const QList<QUrl> &urls);
+    Q_INVOKABLE void addItems(const QList<QUrl> &urls);
 
 private:
-    QVector<BackupItem> m_BackupItems;
+    QVector<BackupItem*> m_BackupItems;
 };
 
 #endif // BACKUPLISTMODEL_H

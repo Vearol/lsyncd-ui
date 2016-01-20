@@ -24,6 +24,8 @@ Window {
         width: 1020
         height: 65
         color: "#f0f0f5"
+        anchors.right: parent.right
+        anchors.left: parent.left
 
         RowLayout {
             id: row1
@@ -51,8 +53,8 @@ Window {
                 height: 30
                 text: "Add"
                 onClicked: {
-                    //fileDialog.open()
-                    backupModel.addItems([])
+                    fileDialog.open()
+                    //backupModel.addItems([])
                 }
 
             }
@@ -61,7 +63,6 @@ Window {
 
 
         Rectangle{
-            y: 65
             width: 1020
             height: 750
             color: "white"
@@ -96,7 +97,7 @@ Window {
                     }
                 }
             }
-
         }
+
 }
 
