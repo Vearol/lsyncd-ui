@@ -1,10 +1,11 @@
 TEMPLATE = app
 
-QT += qml quick
+QT += qml quick widgets
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    myitemsmodel.cpp
+    BackupListModel.cpp \
+    BackupItem.cpp
 
 RESOURCES += qml.qrc
 
@@ -15,5 +16,9 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 HEADERS += \
-    myitemsmodel.h
+    BackupListModel.h \
+    BackupItem.h
+
+DISTFILES += \
+    assets/folder_blue.svg
 

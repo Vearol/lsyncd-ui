@@ -1,18 +1,18 @@
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include "myitemsmodel.h"
+#include "BackupListModel.h"
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
-    MyItemsModel model;
+    BackupListModel model;
 
     QQmlApplicationEngine engine;
 
     QQmlContext *context = engine.rootContext();
-    context->setContextProperty("myModel", &model);
+    context->setContextProperty("backupModel", &model);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
