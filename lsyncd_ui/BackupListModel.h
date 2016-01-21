@@ -6,6 +6,7 @@
 #include <QVector>
 #include <QObject>
 #include <QUrl>
+#include <QSet>
 #include "BackupItem.h"
 
 class BackupListModel : public QAbstractListModel
@@ -31,6 +32,7 @@ public:
 
 private:
     QVector<BackupItem*> m_BackupItems;
+    QSet<QString> m_AddedPaths;
 };
 
 #endif // BACKUPLISTMODEL_H

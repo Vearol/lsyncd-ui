@@ -53,6 +53,7 @@ Window {
                 height: 30
                 text: "Add"
                 onClicked: {
+                    fileDialog.selectMultiple = true
                     fileDialog.open()
                     //backupModel.addItems([])
                 }

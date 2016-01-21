@@ -2,6 +2,8 @@
 #include "BackupItem.h"
 #include <QUrl>
 #include <QList>
+#include <iterator>
+#include <QString>
 
 BackupListModel::BackupListModel():
     QAbstractListModel()
@@ -49,14 +51,16 @@ void BackupListModel::addItems(const QList<QUrl> &urls)
 {
     int size = urls.size();
     int existingSize = m_BackupItems.size();
-
-
-    beginInsertRows(QModelIndex(), existingSize, existingSize + size - 1);
+    int k = 0;
 
     for(int i = 0; i < size; i++){
         QString path = urls[i].toLocalFile();
-        m_BackupItems.push_back(new BackupItem(path));
+        if (!(m_AddedPaths.contains(path))){
+            m_AddedPaths.insert(path);
+            m_BackupItems.push_back(new BackupItem(path));
+        } else k++;
     }
+    beginInsertRows(QModelIndex(), existingSize, existingSize + size - 1 - k);
 
     endInsertRows();
 }
