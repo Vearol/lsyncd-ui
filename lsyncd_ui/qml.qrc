@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>assets/folder_blue.svg</file>
+        <file>ElButton.qml</file>
+        <file>Colors.js</file>
     </qresource>
 </RCC>

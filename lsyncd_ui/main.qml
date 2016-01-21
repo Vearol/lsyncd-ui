@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs  1.2
+//import "ElButton.qml"
 
 Window {
     visible: true
@@ -16,9 +17,7 @@ Window {
         selectMultiple: true
         onAccepted: {
             backupModel.addItems(fileDialog.fileUrls)
-            //var path = filedialog.fileUrl.toString();
         }
-        //nameFilters:  []
     }
 
     Rectangle{
@@ -37,10 +36,8 @@ Window {
             height: parent.height
             spacing: 10
 
-            Button {
+            ElButton {
                 id: removeButton
-                width: 150
-                height: 30
                 text: "Remove all"
 
                 onClicked: {
@@ -48,56 +45,53 @@ Window {
                 }
             }
 
-            Button {
+            ElButton {
                 id: addButton
-                width: 150
-                height: 30
                 text: "Add"
                 onClicked: {
                     fileDialog.open()
                 }
-
             }
         }
     }
 
 
-        Rectangle{
-            width: 1020
-            height: 750
-            color: "white"
-            anchors.top: parent.top
-            anchors.topMargin: 65
+    Rectangle{
+        width: 1020
+        height: 750
+        color: "white"
+        anchors.top: parent.top
+        anchors.topMargin: 65
 
-            ColumnLayout {
-                anchors.margins: 10
-                anchors.fill: parent
+        ColumnLayout {
+            anchors.margins: 10
+            anchors.fill: parent
 
-                ListView {
-                    id: view
+            ListView {
+                id: view
+                width: parent.width
+                height: parent.height
+                spacing: 10
+                clip: true
+
+                model: backupModel
+
+                delegate: Rectangle {
                     width: parent.width
-                    height: parent.height
-                    spacing: 10
-                    clip: true
+                    height: 25
 
-                    model: backupModel
-
-                    delegate: Rectangle {
-                        width: parent.width
-                        height: 25
-
-                        Text {
-                            anchors.left: parent.left
-                            anchors.leftMargin: 45
-                            text: path
-                        }
-                        Image{
-                            source: "qrc:/assets/folder_blue.svg"
-                        }
+                    Text {
+                        anchors.left: parent.left
+                        anchors.leftMargin: 45
+                        text: path
+                    }
+                    Image{
+                        source: "qrc:/assets/folder_blue.svg"
                     }
                 }
             }
         }
+    }
 
 }
 
