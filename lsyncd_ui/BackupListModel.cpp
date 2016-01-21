@@ -4,6 +4,7 @@
 #include <QList>
 #include <iterator>
 #include <QString>
+#include <QDebug>
 
 BackupListModel::BackupListModel():
     QAbstractListModel()
@@ -51,19 +52,46 @@ void BackupListModel::addItems(const QList<QUrl> &urls)
 {
     int size = urls.size();
     int existingSize = m_BackupItems.size();
-    int k = 0;
+    QSet<QString> originalPaths;
 
-    for(int i = 0; i < size; i++){
+    for (int i = 0; i <  size; i++){
         QString path = urls[i].toLocalFile();
-        if (!(m_AddedPaths.contains(path))){
-            m_AddedPaths.insert(path);
-            m_BackupItems.push_back(new BackupItem(path));
-        } else k++;
+        if (!m_AddedPaths.contains(path) && !originalPaths.contains(path)) {
+            originalPaths.insert(path);
+        }
     }
-    beginInsertRows(QModelIndex(), existingSize, existingSize + size - 1 - k);
+
+    int k = originalPaths.size();
+
+    beginInsertRows(QModelIndex(), existingSize, existingSize + k - 1);
+
+    QSet<QString>::const_iterator i = originalPaths.constBegin();
+    QSet<QString>::const_iterator end = originalPaths.constEnd();
+    while (i != end) {
+        const QString &path = *i;
+
+        m_AddedPaths.insert(path);
+        m_BackupItems.push_back(new BackupItem(path));
+
+        ++i;
+    }
 
     endInsertRows();
 }
+
+void BackupListModel::removeAll()
+{
+    beginResetModel();
+
+    int size = m_BackupItems.size();
+    for (int i = 0; i < size; i++){
+        delete m_BackupItems[i];
+    }
+    m_BackupItems.clear();
+
+    endResetModel();
+}
+
 
 
 

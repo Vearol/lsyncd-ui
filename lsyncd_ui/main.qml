@@ -13,6 +13,7 @@ Window {
         id: fileDialog
         title: "Please choose a file"
         folder: shortcuts.home
+        selectMultiple: true
         onAccepted: {
             backupModel.addItems(fileDialog.fileUrls)
             //var path = filedialog.fileUrl.toString();
@@ -43,7 +44,7 @@ Window {
                 text: "Remove all"
 
                 onClicked: {
-
+                    backupModel.removeAll()
                 }
             }
 
@@ -53,9 +54,7 @@ Window {
                 height: 30
                 text: "Add"
                 onClicked: {
-                    fileDialog.selectMultiple = true
                     fileDialog.open()
-                    //backupModel.addItems([])
                 }
 
             }
