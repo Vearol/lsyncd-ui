@@ -8,5 +8,12 @@
         <file>assets/file_blue.svg</file>
         <file>Images.js</file>
         <file>ElScrollView.qml</file>
+        <file>ElTabView.qml</file>
+        <file>assets/List_blue.svg</file>
+        <file>assets/List_gray.svg</file>
+        <file>assets/List_white.svg</file>
+        <file>assets/tree_blue.svg</file>
+        <file>assets/tree_gray.svg</file>
+        <file>assets/tree_white.svg</file>
     </qresource>
 </RCC>

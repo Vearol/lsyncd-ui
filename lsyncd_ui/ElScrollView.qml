@@ -15,7 +15,7 @@ ScrollView {
                 anchors.right: parent.right
                 anchors.left: parent.left
                 radius: 10
-                color: Colors.hoverButtonColor
+                color: Colors.blueActiveColor
                 opacity: styleData.pressed ? 1 : (styleData.hovered ? 0.9 : 0.8)
             }
         }

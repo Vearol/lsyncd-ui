@@ -16,12 +16,12 @@ Button {
                 if (control.enabled) {
                     if (control.hovered) {
                         if (control.pressed) {
-                            result = Colors.clickButtonColor;
+                            result = Colors.darkGrayColor;
                         } else {
-                            result = Colors.hoverButtonColor;
+                            result = Colors.blueActiveColor;
                         }
                     } else {
-                        result = Colors.normalButtonColor;
+                        result = Colors.normalGrayColor;
                     }
                 } else {
                     result = Colors.disabledButtonColor;

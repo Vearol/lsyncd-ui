@@ -21,5 +21,11 @@ HEADERS += \
 
 DISTFILES += \
     assets/folder_blue.svg \
-    assets/file_blue.svg
+    assets/file_blue.svg \
+    assets/List_blue.svg \
+    assets/List_gray.svg \
+    assets/List_white.svg \
+    assets/tree_blue.svg \
+    assets/tree_gray.svg \
+    assets/tree_white.svg
 
