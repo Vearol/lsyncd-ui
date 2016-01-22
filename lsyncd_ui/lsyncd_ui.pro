@@ -20,5 +20,6 @@ HEADERS += \
     BackupItem.h
 
 DISTFILES += \
-    assets/folder_blue.svg
+    assets/folder_blue.svg \
+    assets/file_blue.svg
 
