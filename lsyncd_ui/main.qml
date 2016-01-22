@@ -109,21 +109,20 @@ Window {
                         anchors.rightMargin: scrollView.areScrollBarsVisible ? 10 : 0
                         height: 25
 
-                        Text {
+                        Image {
+                            id: iconImage
                             anchors.left: parent.left
-                            anchors.leftMargin: 45
+                            anchors.leftMargin: 25
+                            anchors.verticalCenter: parent.verticalCenter
+                            source: isfile ? Images.fileUrl : Images.folderUrl
+                            cache: true
+                        }
+
+                        Text {
+                            anchors.left: iconImage.right
+                            anchors.leftMargin: 20
                             anchors.verticalCenter: parent.verticalCenter
                             text: path
-                        }
-                        Item {
-                            anchors.top: parent.top
-                            anchors.topMargin: 4
-                            anchors.left: parent.left
-                            anchors.leftMargin: 10
-
-                            Image {
-                                source: isfile ? Images.fileUrl : Images.folderUrl
-                            }
                         }
                     }
                 }
