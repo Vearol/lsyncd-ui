@@ -52,7 +52,9 @@ void BackupListModel::addItems(const QList<QUrl> &urls)
 {
     int size = urls.size();
     int existingSize = m_BackupItems.size();
+
     QSet<QString> originalPaths;
+    originalPaths.reserve(size);
 
     for (int i = 0; i <  size; i++){
         QString path = urls[i].toLocalFile();
@@ -62,6 +64,8 @@ void BackupListModel::addItems(const QList<QUrl> &urls)
     }
 
     int k = originalPaths.size();
+    m_BackupItems.reserve(existingSize + k);
+    m_AddedPaths.reserve(existingSize + k);
 
     beginInsertRows(QModelIndex(), existingSize, existingSize + k - 1);
 
