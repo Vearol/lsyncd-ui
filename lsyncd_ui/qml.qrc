@@ -7,5 +7,6 @@
         <file>BackupItem.cpp</file>
         <file>assets/file_blue.svg</file>
         <file>Images.js</file>
+        <file>ElScrollView.qml</file>
     </qresource>
 </RCC>

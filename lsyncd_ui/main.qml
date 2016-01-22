@@ -21,6 +21,7 @@ Window {
             backupModel.addItems(fileDialog.fileUrls)
         }
     }
+
     FileDialog {
         id: folderDialog
         title: "Please choose a file"
@@ -31,102 +32,97 @@ Window {
         }
     }
 
-    Rectangle {
+    Rectangle{
         anchors.fill: parent
         anchors.margins: 10
-        color: Colors.applicationBackgroundColor
+        color: Colors.applicationListColor
 
-        ScrollView{
-            width: parent.width
-            height: parent.height
+        ColumnLayout {
+            anchors.margins: 10
+            anchors.fill: parent
 
-            verticalScrollBarPolicy: Qt.ScrollBarAlwaysOn
+            Rectangle {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: 65
+                color: Colors.buttonsPanelColor
 
-            Rectangle{
-                anchors.fill: parent
-                anchors.margins: 10
-                color: Colors.applicationListColor
-
-                ColumnLayout {
-                    anchors.margins: 10
+                RowLayout {
                     anchors.fill: parent
+                    anchors.rightMargin: 10
+                    id: row1
+                    spacing: 10
 
-                    Rectangle {
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        height: 65
-                        color: Colors.buttonsPanelColor
+                    Item {
+                        Layout.fillWidth: true
+                    }
 
-                        RowLayout {
-                            anchors.fill: parent
-                            anchors.rightMargin: 10
-                            id: row1
-                            spacing: 10
+                    ElButton {
+                        id: removeButton
+                        text: "Remove all"
+                        anchors.verticalCenter: parent.verticalCenter
 
-                            Item {
-                                Layout.fillWidth: true
-                            }
-
-                            ElButton {
-                                id: removeButton
-                                text: "Remove all"
-                                anchors.verticalCenter: parent.verticalCenter
-
-                                onClicked: {
-                                    backupModel.removeAll()
-                                }
-                            }
-
-                            ElButton {
-                                id: addFilesButton
-                                text: "Add files"
-                                anchors.verticalCenter: parent.verticalCenter
-
-                                onClicked: {
-                                    fileDialog.open()
-                                }
-                            }
-                            ElButton {
-                                id: addFolderButton
-                                text: "Add directories"
-                                anchors.verticalCenter: parent.verticalCenter
-
-                                onClicked: {
-                                    folderDialog.open()
-                                }
-                            }
+                        onClicked: {
+                            backupModel.removeAll()
                         }
                     }
 
-                    ListView {
-                        id: view
+                    ElButton {
+                        id: addFilesButton
+                        text: "Add files"
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        onClicked: {
+                            fileDialog.open()
+                        }
+                    }
+                    ElButton {
+                        id: addFolderButton
+                        text: "Add directory"
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        onClicked: {
+                            folderDialog.open()
+                        }
+                    }
+                }
+            }
+
+            ElScrollView {
+                id: scrollView
+                anchors.left: parent.left
+                anchors.right: parent.right
+                Layout.fillHeight: true
+                property bool areScrollBarsVisible: flickableItem.contentHeight > flickableItem.height
+
+                ListView {
+                    id: view
+                    anchors.fill: parent
+                    clip: true
+
+                    model: backupModel
+
+                    delegate: Rectangle {
+                        color: index % 2 ? Colors.buttonsPanelColor : Colors.applicationListColor
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        height: 690
-                        clip: true
+                        anchors.rightMargin: scrollView.areScrollBarsVisible ? 10 : 0
+                        height: 25
 
-                        model: backupModel
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 45
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: path
+                        }
+                        Item {
+                            anchors.top: parent.top
+                            anchors.topMargin: 4
+                            anchors.left: parent.left
+                            anchors.leftMargin: 10
 
-                        delegate: Rectangle {
-                            color: index % 2 ? Colors.buttonsPanelColor : Colors.applicationListColor
-                            width: parent.width
-                            height: 25
-
-                            Text {
-                                anchors.left: parent.left
-                                anchors.leftMargin: 45
-                                anchors.verticalCenter: parent.verticalCenter
-                                text: path
-                            }
-                            Item {
-                                anchors.top: parent.top
-                                anchors.topMargin: 4
-                                anchors.left: parent.left
-                                anchors.leftMargin: 10
-
-                                Image {
-                                    source: isfile ? Images.fileUrl : Images.folderUrl
-                                }
+                            Image {
+                                source: isfile ? Images.fileUrl : Images.folderUrl
                             }
                         }
                     }
@@ -134,6 +130,6 @@ Window {
             }
         }
     }
-
 }
+
 

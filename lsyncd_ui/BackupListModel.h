@@ -30,6 +30,7 @@ public:
 public:
     Q_INVOKABLE void addItems(const QList<QUrl> &urls);
     Q_INVOKABLE void removeAll();
+   // Q_INVOKABLE void removeSingle(?);
 
 private:
     QVector<BackupItem*> m_BackupItems;

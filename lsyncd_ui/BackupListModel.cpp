@@ -88,6 +88,7 @@ void BackupListModel::removeAll()
         delete m_BackupItems[i];
     }
     m_BackupItems.clear();
+    m_AddedPaths.clear();
 
     endResetModel();
 }
