@@ -17,11 +17,13 @@ TabView {
                 color: Colors.normalGrayColor
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
+
             }
         }
 
         tabBar: Rectangle {
             color: Colors.normalGrayColor
+
         }
 
         tab: Item { }

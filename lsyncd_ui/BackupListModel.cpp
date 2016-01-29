@@ -83,6 +83,7 @@ void BackupListModel::addItems(const QList<QUrl> &urls)
     endInsertRows();
 }
 
+
 void BackupListModel::removeAll()
 {
     beginResetModel();
@@ -93,6 +94,18 @@ void BackupListModel::removeAll()
     }
     m_BackupItems.clear();
     m_AddedPaths.clear();
+
+    endResetModel();
+}
+
+void BackupListModel::removeSingle(int index)
+{
+    beginResetModel();
+    QString path = m_BackupItems[index]->getBackupPath();
+
+    delete m_BackupItems[index];
+    m_AddedPaths.remove(path);
+    m_BackupItems.remove(index);
 
     endResetModel();
 }

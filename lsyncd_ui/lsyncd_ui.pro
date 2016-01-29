@@ -27,5 +27,7 @@ DISTFILES += \
     assets/List_white.svg \
     assets/tree_blue.svg \
     assets/tree_gray.svg \
-    assets/tree_white.svg
+    assets/tree_white.svg \
+    assets/file_gray.svg \
+    assets/folder_gray.svg
 

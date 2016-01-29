@@ -12,6 +12,7 @@ Window {
     width: 1020
     height: 810
 
+
     FileDialog {
         id: fileDialog
         title: "Please choose a file"
@@ -19,6 +20,7 @@ Window {
         selectMultiple: true
         onAccepted: {
             backupModel.addItems(fileDialog.fileUrls)
+            console.log(fileDialog.fileUrls)
         }
     }
 
@@ -112,6 +114,7 @@ Window {
                 property string activeBackground: Images.treeBlue
                 property string notActiveBackground: Images.treeGray
                 property string hoverBackground: Images.treeWhite
+
             }
 
             Tab {
@@ -153,15 +156,6 @@ Window {
                             }
 
                             ElButton {
-                                id: addFilesButton
-                                text: "Add files"
-                                anchors.verticalCenter: parent.verticalCenter
-
-                                onClicked: {
-                                    fileDialog.open()
-                                }
-                            }
-                            ElButton {
                                 id: addFolderButton
                                 text: "Add directory"
                                 anchors.verticalCenter: parent.verticalCenter
@@ -175,6 +169,7 @@ Window {
 
                     ElScrollView {
                         id: scrollView
+
                         anchors.left: parent.left
                         anchors.right: parent.right
                         Layout.fillHeight: true
@@ -188,6 +183,8 @@ Window {
                             model: backupModel
 
                             delegate: Rectangle {
+                                id: addedFolder
+
                                 color: index % 2 ? Colors.buttonsPanelColor : Colors.applicationListColor
                                 anchors.left: parent.left
                                 anchors.right: parent.right
@@ -204,16 +201,56 @@ Window {
                                 }
 
                                 Text {
+                                    id: pathText
+
                                     anchors.left: iconImage.right
                                     anchors.leftMargin: 20
                                     anchors.verticalCenter: parent.verticalCenter
+                                    color: Colors.pathTextColor
                                     text: path
                                 }
+
+                                MouseArea {
+                                    id: deleteOne
+
+                                    width: 30
+                                    anchors.top: addedFolder.top
+                                    anchors.bottom: addedFolder.bottom
+                                    anchors.right: addedFolder.right
+
+                                    hoverEnabled: true
+
+                                    onClicked: backupModel.removeSingle(index)
+                                }
+
+                                Image {
+
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        anchors.right: deleteOne.right
+                                        anchors.rightMargin: 10
+
+                                        source: {
+                                            var imageClose;
+
+                                            if (deleteOne.containsMouse) {
+                                                imageClose = Images.deleteBlack;
+                                            }
+                                            else {
+                                                imageClose = Images.deleteGray;
+                                            }
+                                            if (deleteOne.pressed)
+                                                    imageClose = Images.deleteBlue
+
+
+                                            return imageClose;
+                                        }
+                                    }
+
                             }
-                        }
                         }
                     }
                 }
+            }
         }
     }
 }

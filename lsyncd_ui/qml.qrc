@@ -15,5 +15,10 @@
         <file>assets/tree_blue.svg</file>
         <file>assets/tree_gray.svg</file>
         <file>assets/tree_white.svg</file>
+        <file>assets/file_gray.svg</file>
+        <file>assets/folder_gray.svg</file>
+        <file>assets/close_gray.svg</file>
+        <file>assets/close_black.svg</file>
+        <file>assets/close_blue.svg</file>
     </qresource>
 </RCC>
