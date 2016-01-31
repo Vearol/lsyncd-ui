@@ -42,7 +42,7 @@ Button {
 
                 if (control.enabled) {
                     if (control.hovered) {
-                        result = Colors.hoveredTextColor;
+                        result = Colors.normalTextColor;
                     } else {
                         result = Colors.normalTextColor;
                     }

@@ -63,30 +63,77 @@ Window {
                     model: tabView.count
 
                     delegate: Rectangle {
+                        id: showType
+
                         width: 100
                         height: 150
                         color: (tabView.currentIndex == index) ? Colors.applicationBackgroundColor : Colors.notActiveTabColor
 
-                        Image {
-                            anchors.centerIn: parent
-                            source: {
-                                var tab = tabView.getTab(index);
-                                var isActiveTab = tabView.currentIndex == index;
-                                var imageSrc;
+                        Item {
+                            anchors.fill: parent
 
-                                if (itemsMA.containsMouse) {
-                                    imageSrc = tab.hoverBackground;
-                                } else {
-                                    if (isActiveTab) {
-                                        imageSrc = tab.activeBackground;
+                            Image {
+                                id: showI
+
+                                anchors.centerIn: parent
+
+                                source: {
+                                    var tab = tabView.getTab(index);
+                                    var isActiveTab = tabView.currentIndex == index;
+                                    var imageSrc;
+
+                                    if (itemsMA.containsMouse) {
+                                        imageSrc = tab.hoverBackground;
                                     } else {
-                                        imageSrc = tab.notActiveBackground;
+                                        if (isActiveTab) {
+                                            imageSrc = tab.activeBackground;
+                                        } else {
+                                            imageSrc = tab.notActiveBackground;
+                                        }
                                     }
+
+                                    return imageSrc;
+                                }
+                            }
+
+                            Text {
+                                anchors.bottom: parent.bottom
+                                anchors.bottomMargin: 10
+                                anchors.horizontalCenter: parent.horizontalCenter
+
+                                text: {
+                                    var showT;
+                                        if (index == 0) {
+                                            showT = "Tree";
+                                        } else {
+                                            showT = "List";
+                                        }
+
+                                    return showT;
                                 }
 
-                                return imageSrc;
+                                font.pixelSize: 18
+
+                                color: {
+                                    var tab = tabView.getTab(index);
+                                    var isActiveTab = tabView.currentIndex == index;
+                                    var txtColor;
+
+                                    if (itemsMA.containsMouse) {
+                                        txtColor = Colors.normalTextColor;
+                                    } else {
+                                        if (isActiveTab) {
+                                            txtColor = Colors.hoveredTextColor;
+                                        } else {
+                                            txtColor = Colors.normalGrayColor;
+                                        }
+                                    }
+
+                                    return txtColor;
+                                }
                             }
                         }
+
 
                         MouseArea {
                             id: itemsMA
