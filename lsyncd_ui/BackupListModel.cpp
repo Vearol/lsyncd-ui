@@ -110,6 +110,13 @@ void BackupListModel::removeSingle(int index)
     endResetModel();
 }
 
+bool BackupListModel::notEmpty()
+{
+    if (m_BackupItems.size() == 0)
+        return false;
+    else return true;
+}
+
 
 
 

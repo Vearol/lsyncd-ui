@@ -9,11 +9,38 @@ import "Images.js" as Images
 
 Window {
     visible: true
-    width: 1020
-    height: 810
 
+    x: Screen.width / 2 - width / 2
+    y: Screen.height / 2 - height / 2
+    minimumWidth: 1020
+    minimumHeight: 810
 
-    FileDialog {
+    MessageDialog {
+        id: messageDialog
+        title: "Warning"
+        text: "Are you sure?"
+        icon: StandardIcon.Warning
+        standardButtons: StandardButton.Yes | StandardButton.No
+        onYes: {
+            backupModel.removeAll()
+        }
+        onNo: messageDialog.close()
+
+    }
+
+    MessageDialog {
+        id: alertWindow
+        title: "Information"
+        text: "There is nothing to remove"
+        icon: StandardIcon.Information
+        standardButtons: StandardButton.Ok
+        onAccepted: {
+            alertWindow.close()
+        }
+
+    }
+
+    /*FileDialog {
         id: fileDialog
         title: "Please choose a file"
         folder: shortcuts.home
@@ -23,7 +50,7 @@ Window {
             console.log(fileDialog.fileUrls)
         }
     }
-
+    */
     FileDialog {
         id: folderDialog
         title: "Please choose a file"
@@ -134,7 +161,6 @@ Window {
                             }
                         }
 
-
                         MouseArea {
                             id: itemsMA
                             hoverEnabled: true
@@ -197,8 +223,12 @@ Window {
                                 text: "Remove all"
                                 anchors.verticalCenter: parent.verticalCenter
 
+
                                 onClicked: {
-                                    backupModel.removeAll()
+                                    if (backupModel.notEmpty())
+                                        messageDialog.open()
+                                    else
+                                        alertWindow.open()
                                 }
                             }
 

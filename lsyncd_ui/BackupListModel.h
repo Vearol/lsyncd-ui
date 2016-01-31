@@ -31,6 +31,7 @@ public:
     Q_INVOKABLE void addItems(const QList<QUrl> &urls);
     Q_INVOKABLE void removeAll();
     Q_INVOKABLE void removeSingle(int index);
+    Q_INVOKABLE bool notEmpty();
 
 private:
     QVector<BackupItem*> m_BackupItems;
