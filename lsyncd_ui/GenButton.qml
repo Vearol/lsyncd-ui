@@ -6,8 +6,8 @@ import "Colors.js" as Colors
 Button {
     style: ButtonStyle {
         background: Rectangle {
-            implicitWidth: 150
-            implicitHeight: 30
+            implicitWidth: 230
+            implicitHeight: 45
             border.width: 0
             radius: 0
             color: {
@@ -18,15 +18,14 @@ Button {
                         if (control.pressed) {
                             result = Colors.darkGrayColor;
                         } else {
-                            result = Colors.blueActiveColor;
+                            result = Colors.normalTextColor;
                         }
                     } else {
-                        result = Colors.normalGrayColor;
+                        result = Colors.blueActiveColor;
                     }
+                } else {
+                    result = Colors.disabledButtonColor;
                 }
-                    else {
-                        result = Colors.disabledButtonColor
-                    }
 
                 return result;
             }
@@ -47,9 +46,8 @@ Button {
                     } else {
                         result = Colors.normalTextColor;
                     }
-                }
-                else {
-                    result = Colors.disabledTextColor
+                } else {
+                    result = Colors.disabledTextColori;
                 }
 
                 return result;

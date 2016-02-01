@@ -100,21 +100,22 @@ void BackupListModel::removeAll()
 
 void BackupListModel::removeSingle(int index)
 {
-    beginResetModel();
+    beginRemoveRows(QModelIndex(), index, index);
     QString path = m_BackupItems[index]->getBackupPath();
 
     delete m_BackupItems[index];
     m_AddedPaths.remove(path);
     m_BackupItems.remove(index);
 
-    endResetModel();
+    endRemoveRows();
 }
 
-bool BackupListModel::notEmpty()
+bool BackupListModel::isEmpty()
 {
-    if (m_BackupItems.size() == 0)
-        return false;
-    else return true;
+    if (m_BackupItems.size() == 0) {
+        return true;
+    }
+    else return false;
 }
 
 

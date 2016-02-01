@@ -28,17 +28,6 @@ Window {
 
     }
 
-    MessageDialog {
-        id: alertWindow
-        title: "Information"
-        text: "There is nothing to remove"
-        icon: StandardIcon.Information
-        standardButtons: StandardButton.Ok
-        onAccepted: {
-            alertWindow.close()
-        }
-
-    }
 
     /*FileDialog {
         id: fileDialog
@@ -100,8 +89,6 @@ Window {
                             anchors.fill: parent
 
                             Image {
-                                id: showI
-
                                 anchors.centerIn: parent
 
                                 source: {
@@ -181,6 +168,7 @@ Window {
             anchors.top: header.bottom
             anchors.right: parent.right
             anchors.bottom: parent.bottom
+            anchors.bottomMargin: 65
 
             Tab {
                 title: "Tree"
@@ -222,13 +210,10 @@ Window {
                                 id: removeButton
                                 text: "Remove all"
                                 anchors.verticalCenter: parent.verticalCenter
-
-
+                                enabled: backupListView.count > 0
                                 onClicked: {
-                                    if (backupModel.notEmpty())
+                                    if (!backupModel.isEmpty())
                                         messageDialog.open()
-                                    else
-                                        alertWindow.open()
                                 }
                             }
 
@@ -253,7 +238,7 @@ Window {
                         property bool areScrollBarsVisible: flickableItem.contentHeight > flickableItem.height
 
                         ListView {
-                            id: view
+                            id: backupListView
                             anchors.fill: parent
                             clip: true
 
@@ -315,9 +300,9 @@ Window {
                                             else {
                                                 imageClose = Images.deleteGray;
                                             }
-                                            if (deleteOne.pressed)
+                                            if (deleteOne.pressed) {
                                                     imageClose = Images.deleteBlue
-
+                                            }
 
                                             return imageClose;
                                         }
@@ -329,6 +314,16 @@ Window {
                 }
             }
         }
+
+        GenButton {
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 10
+            anchors.rightMargin: 40
+            anchors.right: parent.right
+
+            text: "Generate"
+        }
+
     }
 }
 

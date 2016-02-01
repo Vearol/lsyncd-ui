@@ -5,7 +5,7 @@ var disabledButtonColor = "#e8ebf2";
 
 var normalTextColor = "#ffffff";
 var hoveredTextColor = "#2085ed";
-var disabledTextColor = "#b2b9c3";
+var disabledTextColor = "#b0b8c3";
 var pathTextColor = "#575b64"
 
 var tabBackgroundColor = "#f7f8fd";
