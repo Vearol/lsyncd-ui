@@ -24,7 +24,7 @@ Button {
                         result = Colors.blueActiveColor;
                     }
                 } else {
-                    result = Colors.disabledButtonColor;
+                    result = Colors.generateButtonDisabledColor;
                 }
 
                 return result;
@@ -36,19 +36,24 @@ Button {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
 
-            font.pixelSize: 16
+            font.pixelSize: 18
             color: {
                 var result;
 
                 if (control.enabled) {
                     if (control.hovered) {
-                        result = Colors.normalTextColor;
+                        if (control.pressed) {
+                            result = Colors.normalTextColor;
+                        } else {
+                            result = Colors.blueActiveColor;
+                        }
                     } else {
-                        result = Colors.normalTextColor;
+                        result = Colors.normalTextColor
                     }
-                } else {
-                    result = Colors.disabledTextColori;
                 }
+                    else {
+                        result = Colors.disabledTextColor;
+                    }
 
                 return result;
             }

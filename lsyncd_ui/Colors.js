@@ -2,6 +2,7 @@ var normalGrayColor = "#c7d0dd";
 var blueActiveColor = "#2085ed";
 var darkGrayColor = "#545b63";
 var disabledButtonColor = "#e8ebf2";
+var generateButtonDisabledColor = "#c8d0dd"
 
 var normalTextColor = "#ffffff";
 var hoveredTextColor = "#2085ed";

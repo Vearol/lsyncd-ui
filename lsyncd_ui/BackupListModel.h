@@ -12,6 +12,8 @@
 class BackupListModel : public QAbstractListModel
 {
     Q_OBJECT
+    Q_PROPERTY(int сount READ rowCount NOTIFY rowCountChanged)
+
 public:
     BackupListModel();
     virtual ~BackupListModel();
@@ -23,7 +25,7 @@ public:
 
     // QAbstractItemModel interface
 public:
-    virtual int rowCount(const QModelIndex &parent) const;
+    virtual int rowCount(const QModelIndex & parent = QModelIndex()) const;
     virtual QVariant data(const QModelIndex &index, int role) const;
     virtual QHash<int, QByteArray> roleNames() const;
 
@@ -33,9 +35,14 @@ public:
     Q_INVOKABLE void removeSingle(int index);
     Q_INVOKABLE bool isEmpty();
 
+
+signals:
+    void rowCountChanged();
+
 private:
     QVector<BackupItem*> m_BackupItems;
     QSet<QString> m_AddedPaths;
+
 };
 
 #endif // BACKUPLISTMODEL_H

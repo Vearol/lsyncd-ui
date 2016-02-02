@@ -51,7 +51,11 @@ Window {
     }
 
     Rectangle {
-        anchors.fill: parent
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 65
         color: Colors.applicationBackgroundColor
 
         Rectangle {
@@ -117,11 +121,11 @@ Window {
 
                                 text: {
                                     var showT;
-                                        if (index == 0) {
-                                            showT = "Tree";
-                                        } else {
-                                            showT = "List";
-                                        }
+                                    if (index == 0) {
+                                        showT = "Tree";
+                                    } else {
+                                        showT = "List";
+                                    }
 
                                     return showT;
                                 }
@@ -179,6 +183,8 @@ Window {
             }
 
             Tab {
+                id: tabList
+
                 active: true
                 property string activeBackground: Images.listBlue
                 property string notActiveBackground: Images.listGray
@@ -210,7 +216,7 @@ Window {
                                 id: removeButton
                                 text: "Remove all"
                                 anchors.verticalCenter: parent.verticalCenter
-                                enabled: backupListView.count > 0
+                                enabled: backupModel.count > 0
                                 onClicked: {
                                     if (!backupModel.isEmpty())
                                         messageDialog.open()
@@ -287,26 +293,26 @@ Window {
 
                                 Image {
 
-                                        anchors.verticalCenter: parent.verticalCenter
-                                        anchors.right: deleteOne.right
-                                        anchors.rightMargin: 10
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    anchors.right: deleteOne.right
+                                    anchors.rightMargin: 10
 
-                                        source: {
-                                            var imageClose;
+                                    source: {
+                                        var imageClose;
 
-                                            if (deleteOne.containsMouse) {
-                                                imageClose = Images.deleteBlack;
-                                            }
-                                            else {
-                                                imageClose = Images.deleteGray;
-                                            }
-                                            if (deleteOne.pressed) {
-                                                    imageClose = Images.deleteBlue
-                                            }
-
-                                            return imageClose;
+                                        if (deleteOne.containsMouse) {
+                                            imageClose = Images.deleteBlack;
                                         }
+                                        else {
+                                            imageClose = Images.deleteGray;
+                                        }
+                                        if (deleteOne.pressed) {
+                                            imageClose = Images.deleteBlue
+                                        }
+
+                                        return imageClose;
                                     }
+                                }
 
                             }
                         }
@@ -321,7 +327,9 @@ Window {
             anchors.rightMargin: 40
             anchors.right: parent.right
 
-            text: "Generate"
+            enabled: backupModel.count > 0
+
+            text: "Generate" + backupModel.count
         }
 
     }

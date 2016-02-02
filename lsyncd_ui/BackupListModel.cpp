@@ -9,6 +9,7 @@
 BackupListModel::BackupListModel():
     QAbstractListModel()
 {
+
 }
 
 BackupListModel::~BackupListModel()
@@ -81,6 +82,7 @@ void BackupListModel::addItems(const QList<QUrl> &urls)
     }
 
     endInsertRows();
+    emit rowCountChanged();
 }
 
 
@@ -96,6 +98,8 @@ void BackupListModel::removeAll()
     m_AddedPaths.clear();
 
     endResetModel();
+
+    emit rowCountChanged();
 }
 
 void BackupListModel::removeSingle(int index)
@@ -108,6 +112,8 @@ void BackupListModel::removeSingle(int index)
     m_BackupItems.remove(index);
 
     endRemoveRows();
+
+    emit rowCountChanged();
 }
 
 bool BackupListModel::isEmpty()
@@ -117,6 +123,8 @@ bool BackupListModel::isEmpty()
     }
     else return false;
 }
+
+
 
 
 
