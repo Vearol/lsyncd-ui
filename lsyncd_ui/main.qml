@@ -216,7 +216,7 @@ Window {
                                 id: removeButton
                                 text: "Remove all"
                                 anchors.verticalCenter: parent.verticalCenter
-                                enabled: backupModel.count > 0
+                                enabled: backupModel.itemsCount > 0
                                 onClicked: {
                                     if (!backupModel.isEmpty())
                                         messageDialog.open()
@@ -327,9 +327,9 @@ Window {
             anchors.rightMargin: 40
             anchors.right: parent.right
 
-            enabled: backupModel.count > 0
+            enabled: backupModel.itemsCount > 0
 
-            text: "Generate" + backupModel.count
+            text: "Generate"
         }
 
     }

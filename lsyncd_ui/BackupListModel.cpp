@@ -82,7 +82,8 @@ void BackupListModel::addItems(const QList<QUrl> &urls)
     }
 
     endInsertRows();
-    emit rowCountChanged();
+
+    emit rowCountIsChanged();
 }
 
 
@@ -99,7 +100,7 @@ void BackupListModel::removeAll()
 
     endResetModel();
 
-    emit rowCountChanged();
+    emit rowCountIsChanged();
 }
 
 void BackupListModel::removeSingle(int index)
@@ -113,7 +114,7 @@ void BackupListModel::removeSingle(int index)
 
     endRemoveRows();
 
-    emit rowCountChanged();
+    emit rowCountIsChanged();
 }
 
 bool BackupListModel::isEmpty()

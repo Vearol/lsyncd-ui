@@ -12,7 +12,7 @@
 class BackupListModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(int сount READ rowCount NOTIFY rowCountChanged)
+    Q_PROPERTY(int itemsCount READ rowCount NOTIFY rowCountIsChanged)
 
 public:
     BackupListModel();
@@ -37,7 +37,7 @@ public:
 
 
 signals:
-    void rowCountChanged();
+    void rowCountIsChanged();
 
 private:
     QVector<BackupItem*> m_BackupItems;
