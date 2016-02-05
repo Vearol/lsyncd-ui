@@ -9,7 +9,6 @@
 BackupListModel::BackupListModel():
     QAbstractListModel()
 {
-
 }
 
 BackupListModel::~BackupListModel()

@@ -5,7 +5,7 @@
 
 class BackupItem {
 public:
-    //BackupItem() {}
+    BackupItem() {}
     BackupItem(const QString &path);
 
     enum BackupType { BackupTypeFile, BackupTypeDirectory };

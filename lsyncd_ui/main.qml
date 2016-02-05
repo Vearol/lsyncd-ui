@@ -41,8 +41,18 @@ Window {
     }
     */
     FileDialog {
+        id: outputFolderDialog
+        title: "Please choose a path"
+        folder: shortcuts.home
+        selectFolder: true
+        onAccepted: {
+            lsyncdConfigModel.readBackupPath(outputFolderDialog.fileUrls)
+        }
+    }
+
+    FileDialog {
         id: folderDialog
-        title: "Please choose a file"
+        title: "Please choose a folder"
         folder: shortcuts.home
         selectFolder: true
         onAccepted: {
@@ -65,6 +75,39 @@ Window {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
+
+            Text {
+                anchors.left: parent.left
+                anchors.leftMargin: 120
+                anchors.verticalCenter: parent.verticalCenter
+
+                font.pixelSize: 20
+                color: Colors.normalTextColor
+
+                text: "Backup disk:"
+            }
+
+            Rectangle {
+                anchors.left: parent.left
+                anchors.leftMargin: 250
+                anchors.verticalCenter: parent.verticalCenter
+                height: 40
+                width: 190
+                color: Colors.normalTextColor
+
+                Text {
+                    id: backupDiskPath
+                    anchors.centerIn: parent
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        outputFolderDialog.open();
+                        backupDiskPath.text = lsyncdConfigModel.backupPath
+                    }
+                }
+            }
         }
 
         Rectangle {
