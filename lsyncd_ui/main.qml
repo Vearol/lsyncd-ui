@@ -28,6 +28,17 @@ Window {
 
     }
 
+    Dialog {
+        id: generateDialog
+        width: 845
+        height: 615
+
+        contentItem: Rectangle {
+            anchors.fill: parent
+            color: Colors.applicationBackgroundColor
+        }
+
+    }
 
     /*FileDialog {
         id: fileDialog
@@ -46,7 +57,7 @@ Window {
         folder: shortcuts.home
         selectFolder: true
         onAccepted: {
-            lsyncdConfigModel.readBackupPath(outputFolderDialog.fileUrls)
+            lsyncdConfigModel.addBackupPath(outputFolderDialog.fileUrl)
         }
     }
 
@@ -87,25 +98,29 @@ Window {
                 text: "Backup disk:"
             }
 
-            Rectangle {
+            GenButton {
+                id: chooseBackupDiskButton
+                anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 250
-                anchors.verticalCenter: parent.verticalCenter
+                width: 150
                 height: 40
+                text: "Choose"
+
+                onClicked: outputFolderDialog.open();
+            }
+            ElTextInput {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: chooseBackupDiskButton.right
+                anchors.leftMargin: 10
+
                 width: 190
-                color: Colors.normalTextColor
+                height: 40
 
                 Text {
-                    id: backupDiskPath
-                    anchors.centerIn: parent
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        outputFolderDialog.open();
-                        backupDiskPath.text = lsyncdConfigModel.backupPath
-                    }
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 16
+                    text: "Path " + lsyncdConfigModel.backupPath
                 }
             }
         }
@@ -124,14 +139,12 @@ Window {
                 Repeater {
                     id: tabsRepeater
                     model: tabView.count
-
                     delegate: Rectangle {
                         id: showType
 
                         width: 100
                         height: 150
                         color: (tabView.currentIndex == index) ? Colors.applicationBackgroundColor : Colors.notActiveTabColor
-
                         Item {
                             anchors.fill: parent
 
@@ -163,14 +176,14 @@ Window {
                                 anchors.horizontalCenter: parent.horizontalCenter
 
                                 text: {
-                                    var showT;
+                                    var showText;
                                     if (index == 0) {
-                                        showT = "Tree";
+                                        showText = "Tree";
                                     } else {
-                                        showT = "List";
+                                        showText = "List";
                                     }
 
-                                    return showT;
+                                    return showText;
                                 }
 
                                 font.pixelSize: 18
@@ -362,6 +375,7 @@ Window {
                     }
                 }
             }
+
         }
 
         GenButton {
@@ -373,6 +387,8 @@ Window {
             enabled: backupModel.itemsCount > 0
 
             text: "Generate"
+
+            onClicked: generateDialog.open()
         }
 
     }

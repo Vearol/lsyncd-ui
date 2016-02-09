@@ -21,5 +21,6 @@
         <file>assets/close_black.svg</file>
         <file>assets/close_blue.svg</file>
         <file>GenButton.qml</file>
+        <file>ElTextInput.qml</file>
     </qresource>
 </RCC>
