@@ -7,7 +7,7 @@ Button {
     style: ButtonStyle {
 
         background: Rectangle {
-            implicitWidth: 100
+            implicitWidth: control.width
             implicitHeight: 45
             border.width: 0
             radius: 0

@@ -112,10 +112,10 @@ Window {
                     }
                 }
 
-                GenButton {
+                ActiveButton {
                     id: chooseBackupDiskButton
 
-                    width: 50
+                    width: 120
                     height: 40
                     text: "Choose"
 
@@ -381,11 +381,12 @@ Window {
 
         }
 
-        GenButton {
+        ActiveButton {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 10
             anchors.rightMargin: 40
             anchors.right: parent.right
+            width: 230
 
             enabled: backupModel.itemsCount > 0
 
