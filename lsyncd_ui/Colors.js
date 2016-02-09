@@ -14,4 +14,5 @@ var notActiveTabColor = "#777F89";
 var applicationBackgroundColor = "#e7ecf3";
 var applicationListColor = "#ffffff"
 var buttonsPanelColor = "#f5f8fe"
+var inputBackgroundColor = "#ffffff";
 
