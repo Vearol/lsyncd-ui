@@ -9,17 +9,13 @@ LsyncdConfigModel::LsyncdConfigModel(){
 LsyncdConfigModel::~LsyncdConfigModel(){
 }
 
-void LsyncdConfigModel::backupPathChanged() {
-}
-
-
 
 QString LsyncdConfigModel::readBackupPath() const
 {
     return m_backupPath;
 }
 
-void LsyncdConfigModel::setBackupPath(QString backupPath)
+void LsyncdConfigModel::setBackupPath(const QString &backupPath)
 {
     if (m_backupPath == backupPath)
         return;
@@ -28,8 +24,7 @@ void LsyncdConfigModel::setBackupPath(QString backupPath)
     emit backupPathChanged();
 }
 
-void LsyncdConfigModel::addBackupPath(const QUrl &url){
+void LsyncdConfigModel::useBackupPath(const QUrl &url){
     QString newBackupPath = url.toLocalFile();
-
     setBackupPath(newBackupPath);
 }

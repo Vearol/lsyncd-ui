@@ -5,8 +5,9 @@ import "Colors.js" as Colors
 
 Button {
     style: ButtonStyle {
+
         background: Rectangle {
-            implicitWidth: 230
+            implicitWidth: 100
             implicitHeight: 45
             border.width: 0
             radius: 0

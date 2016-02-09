@@ -8,24 +8,22 @@
 
 class LsyncdConfigModel : public QObject
 {
-   Q_PROPERTY(QString backupPath READ readBackupPath WRITE setBackupPath NOTIFY backupPathChanged)
-
+    Q_OBJECT
+    Q_PROPERTY(QString backupPath READ readBackupPath WRITE setBackupPath NOTIFY backupPathChanged)
 public:
-
     LsyncdConfigModel();
     virtual ~LsyncdConfigModel();
 
     QString readBackupPath() const;
+    void setBackupPath(const QString &backupPath);
 
-    void setBackupPath(QString backupPath);
-    Q_INVOKABLE void addBackupPath(const QUrl &url);
+    Q_INVOKABLE void useBackupPath(const QUrl &url);
 
 signals:
     void backupPathChanged();
 
 private:
     QString m_backupPath;
-    //BackupItem outputPath;
 };
 
 #endif // LSYNCDCONFIGMODEL

@@ -57,7 +57,7 @@ Window {
         folder: shortcuts.home
         selectFolder: true
         onAccepted: {
-            lsyncdConfigModel.addBackupPath(outputFolderDialog.fileUrl)
+            lsyncdConfigModel.useBackupPath(outputFolderDialog.fileUrl)
         }
     }
 
@@ -82,45 +82,48 @@ Window {
         Rectangle {
             id: header
             height: 60
-            color: Colors.normalGrayColor
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
+            color: Colors.normalGrayColor
 
-            Text {
-                anchors.left: parent.left
-                anchors.leftMargin: 120
-                anchors.verticalCenter: parent.verticalCenter
-
-                font.pixelSize: 20
-                color: Colors.normalTextColor
-
-                text: "Backup disk:"
-            }
-
-            GenButton {
-                id: chooseBackupDiskButton
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 250
-                width: 150
-                height: 40
-                text: "Choose"
-
-                onClicked: outputFolderDialog.open();
-            }
-            ElTextInput {
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: chooseBackupDiskButton.right
-                anchors.leftMargin: 10
-
-                width: 190
-                height: 40
+            RowLayout {
+                spacing: 20
+                anchors.fill: parent
+                anchors.leftMargin: tabsColumn.width + 10
 
                 Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    font.pixelSize: 16
-                    text: "Path " + lsyncdConfigModel.backupPath
+                    font.pixelSize: 20
+                    color: Colors.normalTextColor
+
+                    text: "Backup disk:"
+                }
+
+                Rectangle {
+                    color: Colors.inputBackgroundColor
+                    width: 250
+                    height: 40
+
+                    ElTextInput {
+                        anchors.fill: parent
+                        anchors.margins: 5
+                        text: lsyncdConfigModel.backupPath
+                        onTextChanged: lsyncdConfigModel.backupPath = text
+                    }
+                }
+
+                GenButton {
+                    id: chooseBackupDiskButton
+
+                    width: 50
+                    height: 40
+                    text: "Choose"
+
+                    onClicked: outputFolderDialog.open();
+                }
+
+                Item {
+                    Layout.fillWidth: true
                 }
             }
         }
