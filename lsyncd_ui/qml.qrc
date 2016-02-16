@@ -22,5 +22,6 @@
         <file>assets/close_blue.svg</file>
         <file>GenButton.qml</file>
         <file>ElTextInput.qml</file>
+        <file>PopoutButton.qml</file>
     </qresource>
 </RCC>

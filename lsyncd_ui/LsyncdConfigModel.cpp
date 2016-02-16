@@ -1,4 +1,3 @@
-#include <BackupItem.h>
 #include "LsyncdConfigModel.h"
 #include <QString>
 #include <QUrl>

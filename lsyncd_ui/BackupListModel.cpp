@@ -1,5 +1,6 @@
 #include "BackupListModel.h"
 #include "BackupItem.h"
+#include "LsyncdConfigModel.h"
 #include <QUrl>
 #include <QList>
 #include <iterator>
@@ -55,7 +56,6 @@ void BackupListModel::addItems(const QList<QUrl> &urls)
 
     QSet<QString> originalPaths;
     originalPaths.reserve(size);
-
     for (int i = 0; i <  size; i++){
         QString path = urls[i].toLocalFile();
         if (!m_AddedPaths.contains(path) && !originalPaths.contains(path)) {
@@ -122,6 +122,22 @@ bool BackupListModel::isEmpty()
         return true;
     }
     else return false;
+}
+
+QString BackupListModel::createConfig()
+{
+    LsyncdConfigModel backupPath;
+    QString config = "";
+    int size = m_BackupItems.size();
+
+    config += "settings {\n  logfile =,\n  statusFile =,\n  nodeamon = true,\n}";
+   // config += "sync {\n  default.rsync,\n  source = " + backupPath.readBackupPath() + "\n  target = " + m_BackupItems[0]->getBackupPath() + ",\n}";
+
+    for (int i = 0; i < size; i++){
+        config += "sync {\n  default.rsync,\n  source = " + backupPath.readBackupPath() + "\n  target = " + m_BackupItems[i]->getBackupPath() + ",\n}";
+    }
+
+    return config;
 }
 
 

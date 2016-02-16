@@ -5,11 +5,9 @@ import "Colors.js" as Colors
 
 Button {
     style: ButtonStyle {
-
         background: Rectangle {
-
-            //implicitWidth: 100
-            //implicitHeight: 45
+            implicitWidth: 150
+            implicitHeight: 30
             border.width: 0
             radius: 0
             color: {
@@ -20,13 +18,15 @@ Button {
                         if (control.pressed) {
                             result = Colors.darkGrayColor;
                         } else {
-                            result = Colors.normalTextColor;
+                            result = Colors.blueActiveColor;
                         }
-                    } else {
-                        result = Colors.blueActiveColor;
                     }
-                } else {
-                    result = Colors.generateButtonDisabledColor;
+                    else {
+                        result = Colors.normalTextColor;
+                    }
+                }
+                else {
+                    result = Colors.disabledButtonColor;
                 }
 
                 return result;
@@ -38,7 +38,7 @@ Button {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
 
-            font.pixelSize: 18
+            font.pixelSize: 16
             color: {
                 var result;
 
@@ -47,20 +47,20 @@ Button {
                         if (control.pressed) {
                             result = Colors.normalTextColor;
                         } else {
-                            result = Colors.blueActiveColor;
+                            result = Colors.normalTextColor;
                         }
-                    } else {
-                        result = Colors.normalTextColor
+                    }
+                    else {
+                        result = Colors.blueActiveColor;
                     }
                 }
-                    else {
-                        result = Colors.disabledTextColor;
-                    }
+                else {
+                    result = Colors.disabledTextColor;
+                }
 
                 return result;
             }
         }
     }
 }
-
 

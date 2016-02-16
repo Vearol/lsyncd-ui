@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QString>
 #include <QUrl>
-#include <BackupItem.h>
 
 class LsyncdConfigModel : public QObject
 {

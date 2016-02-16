@@ -1,4 +1,4 @@
-import QtQuick 2.3
+ import QtQuick 2.3
 import QtQuick.Layouts 1.1
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
@@ -32,13 +32,57 @@ Window {
         id: generateDialog
         width: 845
         height: 615
+        title: "Lsyncd config"
 
         contentItem: Rectangle {
             anchors.fill: parent
             color: Colors.applicationBackgroundColor
-        }
 
+            Rectangle {
+                anchors.fill: parent
+                anchors.margins: 20
+                anchors.bottomMargin: 60
+
+                color: "#ffffff"
+                TextEdit {
+                    anchors.fill: parent
+                    anchors.margins: 35
+
+                    text: backupModel.createConfig();
+                }
+            }
+
+            RowLayout {
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.rightMargin: 20
+                height: 60;
+                id: row1
+                spacing: 30
+
+                Item {
+                    Layout.fillWidth: true
+                }
+
+                PopoutButton {
+                    id: backButton
+                    text: "Back"
+                    anchors.verticalCenter: parent.verticalCenter
+                    onClicked: generateDialog.close()
+                }
+
+                PopoutButton {
+                    id: saveToFileButton
+                    text: "Save to file"
+                    anchors.verticalCenter: parent.verticalCenter
+
+                }
+            }
+        }
     }
+
+
 
     /*FileDialog {
         id: fileDialog
@@ -102,7 +146,7 @@ Window {
                 Rectangle {
                     color: Colors.inputBackgroundColor
                     width: 250
-                    height: 40
+                    height: 30
 
                     ElTextInput {
                         anchors.fill: parent
@@ -115,10 +159,9 @@ Window {
                 GenButton {
                     id: chooseBackupDiskButton
 
-                    width: 50
                     height: 40
+                    width: 100
                     text: "Choose"
-
                     onClicked: outputFolderDialog.open();
                 }
 
@@ -386,6 +429,9 @@ Window {
             anchors.bottomMargin: 10
             anchors.rightMargin: 40
             anchors.right: parent.right
+
+            height: 45
+            width: 230
 
             enabled: backupModel.itemsCount > 0
 
