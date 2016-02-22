@@ -5,9 +5,11 @@ import "Colors.js" as Colors
 
 Button {
     style: ButtonStyle {
+
         background: Rectangle {
-            implicitWidth: 150
-            implicitHeight: 30
+
+            implicitWidth: control.width
+            implicitHeight: 45
             border.width: 0
             radius: 0
             color: {
@@ -18,15 +20,13 @@ Button {
                         if (control.pressed) {
                             result = Colors.darkGrayColor;
                         } else {
-                            result = Colors.blueActiveColor;
+                            result = Colors.normalTextColor;
                         }
+                    } else {
+                        result = Colors.blueActiveColor;
                     }
-                    else {
-                        result = Colors.normalTextColor;
-                    }
-                }
-                else {
-                    result = Colors.disabledButtonColor;
+                } else {
+                    result = Colors.generateButtonDisabledColor;
                 }
 
                 return result;
@@ -38,7 +38,7 @@ Button {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
 
-            font.pixelSize: 16
+            font.pixelSize: 18
             color: {
                 var result;
 
@@ -47,20 +47,20 @@ Button {
                         if (control.pressed) {
                             result = Colors.normalTextColor;
                         } else {
-                            result = Colors.normalTextColor;
+                            result = Colors.blueActiveColor;
                         }
+                    } else {
+                        result = Colors.normalTextColor
                     }
+                }
                     else {
-                        result = Colors.blueActiveColor;
+                        result = Colors.disabledTextColor;
                     }
-                }
-                else {
-                    result = Colors.disabledTextColor;
-                }
 
                 return result;
             }
         }
     }
 }
+
 

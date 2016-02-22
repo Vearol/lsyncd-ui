@@ -1,4 +1,4 @@
- import QtQuick 2.3
+import QtQuick 2.3
 import QtQuick.Layouts 1.1
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
@@ -156,11 +156,11 @@ Window {
                     }
                 }
 
-                GenButton {
+                ActiveButton {
                     id: chooseBackupDiskButton
 
                     height: 40
-                    width: 100
+                    width: 120
                     text: "Choose"
                     onClicked: outputFolderDialog.open();
                 }
@@ -424,7 +424,7 @@ Window {
 
         }
 
-        GenButton {
+        ActiveButton {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 10
             anchors.rightMargin: 40

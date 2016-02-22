@@ -118,10 +118,7 @@ void BackupListModel::removeSingle(int index)
 
 bool BackupListModel::isEmpty()
 {
-    if (m_BackupItems.size() == 0) {
-        return true;
-    }
-    else return false;
+    return m_BackupItems.size() == 0;
 }
 
 QString BackupListModel::createConfig()
@@ -131,7 +128,6 @@ QString BackupListModel::createConfig()
     int size = m_BackupItems.size();
 
     config += "settings {\n  logfile =,\n  statusFile =,\n  nodeamon = true,\n}";
-   // config += "sync {\n  default.rsync,\n  source = " + backupPath.readBackupPath() + "\n  target = " + m_BackupItems[0]->getBackupPath() + ",\n}";
 
     for (int i = 0; i < size; i++){
         config += "sync {\n  default.rsync,\n  source = " + backupPath.readBackupPath() + "\n  target = " + m_BackupItems[i]->getBackupPath() + ",\n}";

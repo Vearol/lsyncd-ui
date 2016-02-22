@@ -20,8 +20,9 @@
         <file>assets/close_gray.svg</file>
         <file>assets/close_black.svg</file>
         <file>assets/close_blue.svg</file>
-        <file>GenButton.qml</file>
         <file>ElTextInput.qml</file>
-        <file>PopoutButton.qml</file>
+        <file>configPopup.qml</file>
+        <file>ActiveButton.qml</file>
+        <file>ConfigButton.qml</file>
     </qresource>
 </RCC>
