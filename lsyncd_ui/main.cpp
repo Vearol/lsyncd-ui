@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
 
     BackupListModel model;
     LsyncdConfigModel lsmodel;
+    lsmodel.setBackupElements(&model);
 
     QQmlApplicationEngine engine;
 

@@ -121,21 +121,10 @@ bool BackupListModel::isEmpty()
     return m_BackupItems.size() == 0;
 }
 
-QString BackupListModel::createConfig()
+QString BackupListModel::getAddedPath(int index)
 {
-    LsyncdConfigModel backupPath;
-    QString config = "";
-    int size = m_BackupItems.size();
-
-    config += "settings {\n  logfile =,\n  statusFile =,\n  nodeamon = true,\n}";
-
-    for (int i = 0; i < size; i++){
-        config += "sync {\n  default.rsync,\n  source = " + backupPath.readBackupPath() + "\n  target = " + m_BackupItems[i]->getBackupPath() + ",\n}";
-    }
-
-    return config;
+    return m_BackupItems[index]->getBackupPath();
 }
-
 
 
 

@@ -8,7 +8,6 @@
 #include <QUrl>
 #include <QSet>
 #include "BackupItem.h"
-#include "LsyncdConfigModel.h"
 
 class BackupListModel : public QAbstractListModel
 {
@@ -35,7 +34,7 @@ public:
     Q_INVOKABLE void removeAll();
     Q_INVOKABLE void removeSingle(int index);
     Q_INVOKABLE bool isEmpty();
-    Q_INVOKABLE QString createConfig();
+    QString getAddedPath(int index);
 
 signals:
     void rowCountIsChanged();
@@ -45,5 +44,6 @@ private:
     QSet<QString> m_AddedPaths;
 
 };
+
 
 #endif // BACKUPLISTMODEL_H

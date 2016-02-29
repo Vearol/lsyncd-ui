@@ -8,6 +8,7 @@ import "Colors.js" as Colors
 import "Images.js" as Images
 
 Window {
+    id: mainWindow
     visible: true
 
     x: Screen.width / 2 - width / 2
@@ -27,62 +28,6 @@ Window {
         onNo: messageDialog.close()
 
     }
-
-    Dialog {
-        id: generateDialog
-        width: 845
-        height: 615
-        title: "Lsyncd config"
-
-        contentItem: Rectangle {
-            anchors.fill: parent
-            color: Colors.applicationBackgroundColor
-
-            Rectangle {
-                anchors.fill: parent
-                anchors.margins: 20
-                anchors.bottomMargin: 60
-
-                color: "#ffffff"
-                TextEdit {
-                    anchors.fill: parent
-                    anchors.margins: 35
-
-                    text: backupModel.createConfig();
-                }
-            }
-
-            RowLayout {
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.rightMargin: 20
-                height: 60;
-                id: row1
-                spacing: 30
-
-                Item {
-                    Layout.fillWidth: true
-                }
-
-                PopoutButton {
-                    id: backButton
-                    text: "Back"
-                    anchors.verticalCenter: parent.verticalCenter
-                    onClicked: generateDialog.close()
-                }
-
-                PopoutButton {
-                    id: saveToFileButton
-                    text: "Save to file"
-                    anchors.verticalCenter: parent.verticalCenter
-
-                }
-            }
-        }
-    }
-
-
 
     /*FileDialog {
         id: fileDialog
@@ -410,7 +355,7 @@ Window {
                                         }
                                         if (deleteOne.pressed) {
                                             imageClose = Images.deleteBlue
-                                        }
+                                            r                           }
 
                                         return imageClose;
                                     }
@@ -437,7 +382,18 @@ Window {
 
             text: "Generate"
 
-            onClicked: generateDialog.open()
+            function launchDialog(componentName, directParent, options) {
+                var component = Qt.createComponent(componentName);
+                if (component.status !== Component.Ready) {
+                    console.debug("Component Error: " + component.errorString());
+                } else {
+                    var instance = component.createObject(directParent, options);
+                }
+            }
+
+            onClicked: {
+                launchDialog("ConfigPopup.qml", mainWindow, {})
+            }
         }
 
     }
