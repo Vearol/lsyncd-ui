@@ -34,7 +34,7 @@ public:
     Q_INVOKABLE void removeAll();
     Q_INVOKABLE void removeSingle(int index);
     Q_INVOKABLE bool isEmpty();
-
+    QString getAddedPath(int index);
 
 signals:
     void rowCountIsChanged();
@@ -44,5 +44,6 @@ private:
     QSet<QString> m_AddedPaths;
 
 };
+
 
 #endif // BACKUPLISTMODEL_H

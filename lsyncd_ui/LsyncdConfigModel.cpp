@@ -1,7 +1,10 @@
-#include <BackupItem.h>
 #include "LsyncdConfigModel.h"
+#include "BackupListModel.h"
+#include "BackupItem.h"
 #include <QString>
 #include <QUrl>
+#include <QTextStream>
+#include <QFile>
 
 LsyncdConfigModel::LsyncdConfigModel(){
 }
@@ -24,7 +27,45 @@ void LsyncdConfigModel::setBackupPath(const QString &backupPath)
     emit backupPathChanged();
 }
 
+void LsyncdConfigModel::setBackupElements(BackupListModel *BackupElements)
+{
+    m_BackupElements = BackupElements;
+}
+
 void LsyncdConfigModel::useBackupPath(const QUrl &url){
     QString newBackupPath = url.toLocalFile();
     setBackupPath(newBackupPath);
+}
+
+QString LsyncdConfigModel::createConfig()
+{
+    QByteArray config = "";
+    int size = m_BackupElements->rowCount();
+
+    QTextStream stream(&config);
+    stream << "settings {" << endl << "  logfile =," << endl << "  statusFile =," << endl << "  nodeamon = true," << endl << "} " << endl << endl;
+
+    for (int i = 0; i < size; i++){
+        stream << "sync {" << endl << "  default.rsync," << endl << "  source = " << m_backupPath << endl << "  target = " << m_BackupElements->getAddedPath(i) << "," << endl << "}" << endl;
+    }
+
+    return config;
+}
+
+void LsyncdConfigModel::saveToFile()
+{
+    int size = m_BackupElements->rowCount();
+    QFile file(m_savedFilePath);
+    file.open(QIODevice::WriteOnly);
+    QTextStream stream(&file);
+    stream << "settings {" << endl << "  logfile =," << endl << "  statusFile =," << endl << "  nodeamon = true," << endl << "} " << endl << endl;
+
+    for (int i = 0; i < size; i++){
+        stream << "sync {" << endl << "  default.rsync," << endl << "  source = " << m_backupPath << endl << "  target = " << m_BackupElements->getAddedPath(i) << "," << endl << "}" << endl;
+    }
+}
+
+void LsyncdConfigModel::readFileLocation(const QUrl &url)
+{
+    m_savedFilePath = url.toLocalFile();
 }

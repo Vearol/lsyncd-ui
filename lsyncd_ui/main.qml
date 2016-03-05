@@ -8,6 +8,7 @@ import "Colors.js" as Colors
 import "Images.js" as Images
 
 Window {
+    id: mainWindow
     visible: true
 
     x: Screen.width / 2 - width / 2
@@ -25,18 +26,6 @@ Window {
             backupModel.removeAll()
         }
         onNo: messageDialog.close()
-
-    }
-
-    Dialog {
-        id: generateDialog
-        width: 845
-        height: 615
-
-        contentItem: Rectangle {
-            anchors.fill: parent
-            color: Colors.applicationBackgroundColor
-        }
 
     }
 
@@ -58,6 +47,15 @@ Window {
         selectFolder: true
         onAccepted: {
             lsyncdConfigModel.useBackupPath(outputFolderDialog.fileUrl)
+        }
+    }
+
+    FileDialog {
+        id: saveToFileDialog
+        title: "Please choose a path"
+        folder: shortcuts.home
+        onAccepted: {
+            lsyncdConfigModel.readFileLocation(saveToFileDialog.fileUrl)
         }
     }
 
@@ -102,7 +100,7 @@ Window {
                 Rectangle {
                     color: Colors.inputBackgroundColor
                     width: 250
-                    height: 40
+                    height: 30
 
                     ElTextInput {
                         anchors.fill: parent
@@ -115,10 +113,9 @@ Window {
                 ActiveButton {
                     id: chooseBackupDiskButton
 
-                    width: 120
                     height: 40
+                    width: 120
                     text: "Choose"
-
                     onClicked: outputFolderDialog.open();
                 }
 
@@ -367,7 +364,7 @@ Window {
                                         }
                                         if (deleteOne.pressed) {
                                             imageClose = Images.deleteBlue
-                                        }
+                                            r                           }
 
                                         return imageClose;
                                     }
@@ -388,11 +385,25 @@ Window {
             anchors.right: parent.right
             width: 230
 
+            height: 45
+            width: 230
+
             enabled: backupModel.itemsCount > 0
 
             text: "Generate"
 
-            onClicked: generateDialog.open()
+            function launchDialog(componentName, directParent, options) {
+                var component = Qt.createComponent(componentName);
+                if (component.status !== Component.Ready) {
+                    console.debug("Component Error: " + component.errorString());
+                } else {
+                    var instance = component.createObject(directParent, options);
+                }
+            }
+
+            onClicked: {
+                launchDialog("ConfigPopup.qml", mainWindow, {})
+            }
         }
 
     }
