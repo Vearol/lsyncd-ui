@@ -383,7 +383,6 @@ Window {
             anchors.bottomMargin: 10
             anchors.rightMargin: 40
             anchors.right: parent.right
-            width: 230
 
             height: 45
             width: 230
