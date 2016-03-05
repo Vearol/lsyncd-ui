@@ -108,6 +108,10 @@ Item {
                         id: saveToFileButton
                         text: "Save to file"
                         anchors.verticalCenter: parent.verticalCenter
+                        onClicked: {
+                            saveToFileDialog.open()
+                            lsyncdConfigModel.saveToFile()
+                        }
 
                     }
                 }

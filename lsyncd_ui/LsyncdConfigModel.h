@@ -20,6 +20,8 @@ public:
 
     Q_INVOKABLE void useBackupPath(const QUrl &url);
     Q_INVOKABLE QString createConfig();
+    Q_INVOKABLE void saveToFile();
+    Q_INVOKABLE void readFileLocation(const QUrl &url);
 
 signals:
     void backupPathChanged();
@@ -27,6 +29,7 @@ signals:
 private:
     QString m_backupPath;
     BackupListModel *m_BackupElements;
+    QString m_savedFilePath;
 };
 
 #endif // LSYNCDCONFIGMODEL

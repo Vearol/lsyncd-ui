@@ -51,6 +51,15 @@ Window {
     }
 
     FileDialog {
+        id: saveToFileDialog
+        title: "Please choose a path"
+        folder: shortcuts.home
+        onAccepted: {
+            lsyncdConfigModel.readFileLocation(saveToFileDialog.fileUrl)
+        }
+    }
+
+    FileDialog {
         id: folderDialog
         title: "Please choose a folder"
         folder: shortcuts.home

@@ -3,6 +3,8 @@
 #include "BackupItem.h"
 #include <QString>
 #include <QUrl>
+#include <QTextStream>
+#include <QFile>
 
 LsyncdConfigModel::LsyncdConfigModel(){
 }
@@ -37,14 +39,33 @@ void LsyncdConfigModel::useBackupPath(const QUrl &url){
 
 QString LsyncdConfigModel::createConfig()
 {
-    QString config = "";
+    QByteArray config = "";
     int size = m_BackupElements->rowCount();
 
-    config += "settings {\n  logfile =,\n  statusFile =,\n  nodeamon = true,\n}";
+    QTextStream stream(&config);
+    stream << "settings {" << endl << "  logfile =," << endl << "  statusFile =," << endl << "  nodeamon = true," << endl << "} " << endl << endl;
 
     for (int i = 0; i < size; i++){
-        config += "sync {\n  default.rsync,\n  source = " + m_backupPath + "\n  target = " + m_BackupElements->getAddedPath(i)  + ",\n}";
+        stream << "sync {" << endl << "  default.rsync," << endl << "  source = " << m_backupPath << endl << "  target = " << m_BackupElements->getAddedPath(i) << "," << endl << "}" << endl;
     }
 
     return config;
+}
+
+void LsyncdConfigModel::saveToFile()
+{
+    int size = m_BackupElements->rowCount();
+    QFile file(m_savedFilePath);
+    file.open(QIODevice::WriteOnly);
+    QTextStream stream(&file);
+    stream << "settings {" << endl << "  logfile =," << endl << "  statusFile =," << endl << "  nodeamon = true," << endl << "} " << endl << endl;
+
+    for (int i = 0; i < size; i++){
+        stream << "sync {" << endl << "  default.rsync," << endl << "  source = " << m_backupPath << endl << "  target = " << m_BackupElements->getAddedPath(i) << "," << endl << "}" << endl;
+    }
+}
+
+void LsyncdConfigModel::readFileLocation(const QUrl &url)
+{
+    m_savedFilePath = url.toLocalFile();
 }
