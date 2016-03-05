@@ -47,7 +47,7 @@ QString LsyncdConfigModel::createConfig()
               "    logfile = \"/tmp/lsyncd.log\"," << endl <<
               "    statusFile = \"/tmp/lsyncd.status\"," << endl <<
               "    nodaemon = true," << endl <<
-              "};" << endl;
+              "}" << endl;
 
     for (int i = 0; i < size; i++){
         stream << "sync {" << endl << "  default.rsync," << endl << "  source = " << m_backupPath << endl << "  target = " << m_BackupElements->getAddedPath(i) << "," << endl << "}" << endl;
