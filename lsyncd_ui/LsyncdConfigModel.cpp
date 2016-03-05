@@ -43,7 +43,11 @@ QString LsyncdConfigModel::createConfig()
     int size = m_BackupElements->rowCount();
 
     QTextStream stream(&config);
-    stream << "settings {" << endl << "  logfile =," << endl << "  statusFile =," << endl << "  nodeamon = true," << endl << "} " << endl << endl;
+    stream << "settings {" << endl <<
+              "    logfile = \"/tmp/lsyncd.log\"," << endl <<
+              "    statusFile = \"/tmp/lsyncd.status\"," << endl <<
+              "    nodaemon = true," << endl <<
+              "};" << endl;
 
     for (int i = 0; i < size; i++){
         stream << "sync {" << endl << "  default.rsync," << endl << "  source = " << m_backupPath << endl << "  target = " << m_BackupElements->getAddedPath(i) << "," << endl << "}" << endl;
