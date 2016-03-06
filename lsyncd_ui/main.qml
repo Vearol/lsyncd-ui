@@ -17,17 +17,17 @@ Window {
     minimumHeight: 810
 
     MessageDialog {
-        id: messageDialog
-        title: "Warning"
-        text: "Are you sure?"
+        id: confirmRemoveAll
+        title: "Are you sure?"
         icon: StandardIcon.Warning
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {
             backupModel.removeAll()
         }
-        onNo: messageDialog.close()
-
+        onNo: confirmRemoveAll.close()
     }
+
+
 
     /*FileDialog {
         id: fileDialog
@@ -113,7 +113,7 @@ Window {
                 ActiveButton {
                     id: chooseBackupDiskButton
 
-                    height: 40
+                    height: 30
                     width: 120
                     text: "Choose"
                     onClicked: outputFolderDialog.open();
@@ -275,7 +275,7 @@ Window {
                                 enabled: backupModel.itemsCount > 0
                                 onClicked: {
                                     if (!backupModel.isEmpty())
-                                        messageDialog.open()
+                                        confirmRemoveAll.open()
                                 }
                             }
 

@@ -104,8 +104,10 @@ Item {
                         onClicked: closePopup()
                     }
 
-                    ConfigButton {
+                    ActiveButton {
                         id: saveToFileButton
+                        width: 150
+                        height: 30
                         text: "Save to file"
                         anchors.verticalCenter: parent.verticalCenter
                         onClicked: {

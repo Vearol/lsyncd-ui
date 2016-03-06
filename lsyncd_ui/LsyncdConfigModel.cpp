@@ -41,6 +41,7 @@ QString LsyncdConfigModel::createConfig()
 {
     QByteArray config = "";
     int size = m_BackupElements->rowCount();
+    QString sourcePath;
 
     QTextStream stream(&config);
     stream << "settings {" << endl <<
@@ -50,7 +51,13 @@ QString LsyncdConfigModel::createConfig()
               "}" << endl;
 
     for (int i = 0; i < size; i++){
-        stream << "sync {" << endl << "  default.rsync," << endl << "  source = " << m_backupPath << endl << "  target = " << m_BackupElements->getAddedPath(i) << "," << endl << "}" << endl;
+        sourcePath = m_BackupElements->getAddedPath(i)/*.remove(0,1)*/;
+        stream << "sync {" << endl <<
+                  "    default.rsync," << endl <<
+                  "    source = " << m_BackupElements->getAddedPath(i) << "," << endl <<
+                  "    target = " << m_backupPath + sourcePath << "," << endl <<
+                  "}" << endl;
+
     }
 
     return config;
