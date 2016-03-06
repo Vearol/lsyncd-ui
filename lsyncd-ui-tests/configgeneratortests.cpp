@@ -36,7 +36,7 @@ void ConfigGeneratorTests::generateConfigWithNoItemsTest() {
                 << "    logfile = \"/tmp/lsyncd.log\","
                 << "    statusFile = \"/tmp/lsyncd.status\","
                 << "    nodaemon = true,"
-                << "};"
+                << "}"
                 << "";
     QString expectedConfig = configLines.join("\n");
     QString actualConfig = lsyncdModel.createConfig();
@@ -58,7 +58,7 @@ void ConfigGeneratorTests::generateConfigWithOneItemTest() {
                 << "    logfile = \"/tmp/lsyncd.log\","
                 << "    statusFile = \"/tmp/lsyncd.status\","
                 << "    nodaemon = true,"
-                << "};"
+                << "}"
                 << ""
                 << "sync {"
                 << "    default.rsync,"
@@ -88,7 +88,7 @@ void ConfigGeneratorTests::generateConfigWithSeveralItemsTest() {
                 << "    logfile = \"/tmp/lsyncd.log\","
                 << "    statusFile = \"/tmp/lsyncd.status\","
                 << "    nodaemon = true,"
-                << "};"
+                << "}"
                 << ""
                 << "sync {"
                 << "    default.rsync,"
