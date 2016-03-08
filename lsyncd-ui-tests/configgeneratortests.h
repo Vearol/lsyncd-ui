@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QtTest/QtTest>
+#include <QThread>
 
 class ConfigGeneratorTests : public QObject
 {

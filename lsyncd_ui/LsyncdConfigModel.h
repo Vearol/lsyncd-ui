@@ -17,6 +17,7 @@ public:
     QString readBackupPath() const;
     void setBackupPath(const QString &backupPath);
     void setBackupElements(BackupListModel *BackupElements);
+    QString generateTargetPath(QString backupDisk, QString source);
 
     Q_INVOKABLE void useBackupPath(const QUrl &url);
     Q_INVOKABLE QString createConfig();

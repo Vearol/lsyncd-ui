@@ -32,6 +32,14 @@ void LsyncdConfigModel::setBackupElements(BackupListModel *BackupElements)
     m_BackupElements = BackupElements;
 }
 
+QString LsyncdConfigModel::generateTargetPath(QString backupDisk, QString source)
+{
+    if (source == backupDisk)
+        return source;
+    else return backupDisk + source;
+
+}
+
 void LsyncdConfigModel::useBackupPath(const QUrl &url){
     QString newBackupPath = url.toLocalFile();
     setBackupPath(newBackupPath);
@@ -51,11 +59,11 @@ QString LsyncdConfigModel::createConfig()
               "}" << endl;
 
     for (int i = 0; i < size; i++){
-        sourcePath = m_BackupElements->getAddedPath(i)/*.remove(0,1)*/;
+        sourcePath = generateTargetPath(m_backupPath, m_BackupElements->getAddedPath(i));
         stream << "sync {" << endl <<
                   "    default.rsync," << endl <<
                   "    source = " << m_BackupElements->getAddedPath(i) << "," << endl <<
-                  "    target = " << m_backupPath + sourcePath << "," << endl <<
+                  "    target = " << sourcePath << "," << endl <<
                   "}" << endl;
 
     }
@@ -69,10 +77,20 @@ void LsyncdConfigModel::saveToFile()
     QFile file(m_savedFilePath);
     file.open(QIODevice::WriteOnly);
     QTextStream stream(&file);
-    stream << "settings {" << endl << "  logfile =," << endl << "  statusFile =," << endl << "  nodeamon = true," << endl << "} " << endl << endl;
+    stream << "settings {" << endl <<
+              "    logfile = \"/tmp/lsyncd.log\"," << endl <<
+              "    statusFile = \"/tmp/lsyncd.status\"," << endl <<
+              "    nodaemon = true," << endl <<
+              "}" << endl;
 
     for (int i = 0; i < size; i++){
-        stream << "sync {" << endl << "  default.rsync," << endl << "  source = " << m_backupPath << endl << "  target = " << m_BackupElements->getAddedPath(i) << "," << endl << "}" << endl;
+        QString sourcePath = generateTargetPath(m_backupPath, m_BackupElements->getAddedPath(i));
+        stream << "sync {" << endl <<
+                  "    default.rsync," << endl <<
+                  "    source = " << m_BackupElements->getAddedPath(i) << "," << endl <<
+                  "    target = " << sourcePath << "," << endl <<
+                  "}" << endl;
+
     }
 }
 

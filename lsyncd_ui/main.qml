@@ -18,7 +18,8 @@ Window {
 
     MessageDialog {
         id: confirmRemoveAll
-        title: "Are you sure?"
+        title: "Warning"
+        text: "Remove all items?"
         icon: StandardIcon.Warning
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {
@@ -364,7 +365,7 @@ Window {
                                         }
                                         if (deleteOne.pressed) {
                                             imageClose = Images.deleteBlue
-                                            r                           }
+                                        }
 
                                         return imageClose;
                                     }

@@ -1,6 +1,7 @@
 #include <QCoreApplication>
 #include <QtTest/QtTest>
 #include "configgeneratortests.h"
+#include <QThread>
 
 #define QTEST_CLASS(TestObject, vName, result) \
     TestObject vName; \
