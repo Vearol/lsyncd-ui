@@ -1,7 +1,8 @@
 #include <QCoreApplication>
 #include <QtTest/QtTest>
-#include "configgeneratortests.h"
 #include <QThread>
+#include "configgeneratortests.h"
+#include "targetpathtests.h"
 
 #define QTEST_CLASS(TestObject, vName, result) \
     TestObject vName; \
@@ -14,6 +15,7 @@ int main(int argc, char *argv[]) {
     int result = 0;
 
     QTEST_CLASS(ConfigGeneratorTests, cgt, result);
+    QTEST_CLASS(TargetPathTests, tpt, result);
 
     QThread::sleep(1);
 

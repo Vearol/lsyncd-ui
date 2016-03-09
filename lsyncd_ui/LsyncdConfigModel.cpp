@@ -1,10 +1,11 @@
 #include "LsyncdConfigModel.h"
-#include "BackupListModel.h"
-#include "BackupItem.h"
 #include <QString>
 #include <QUrl>
 #include <QTextStream>
 #include <QFile>
+#include "BackupListModel.h"
+#include "BackupItem.h"
+#include "pathhelpers.h"
 
 LsyncdConfigModel::LsyncdConfigModel(){
 }
@@ -15,29 +16,21 @@ LsyncdConfigModel::~LsyncdConfigModel(){
 
 QString LsyncdConfigModel::readBackupPath() const
 {
-    return m_backupPath;
+    return m_BackupPath;
 }
 
 void LsyncdConfigModel::setBackupPath(const QString &backupPath)
 {
-    if (m_backupPath == backupPath)
+    if (m_BackupPath == backupPath)
         return;
 
-    m_backupPath = backupPath;
+    m_BackupPath = backupPath;
     emit backupPathChanged();
 }
 
 void LsyncdConfigModel::setBackupElements(BackupListModel *BackupElements)
 {
     m_BackupElements = BackupElements;
-}
-
-QString LsyncdConfigModel::generateTargetPath(QString backupDisk, QString source)
-{
-    if (source == backupDisk)
-        return source;
-    else return backupDisk + source;
-
 }
 
 void LsyncdConfigModel::useBackupPath(const QUrl &url){
@@ -59,39 +52,26 @@ QString LsyncdConfigModel::createConfig()
               "}" << endl;
 
     for (int i = 0; i < size; i++){
-        sourcePath = generateTargetPath(m_backupPath, m_BackupElements->getAddedPath(i));
+        const QString &itemsPath = m_BackupElements->getAddedPath(i);
+        sourcePath = Helpers::generateTargetPath(m_BackupPath, itemsPath);
         stream << "sync {" << endl <<
                   "    default.rsync," << endl <<
-                  "    source = " << m_BackupElements->getAddedPath(i) << "," << endl <<
+                  "    source = " << itemsPath << "," << endl <<
                   "    target = " << sourcePath << "," << endl <<
                   "}" << endl;
-
     }
+
+    m_LastConfig = QString(config);
 
     return config;
 }
 
 void LsyncdConfigModel::saveToFile()
 {
-    int size = m_BackupElements->rowCount();
     QFile file(m_savedFilePath);
     file.open(QIODevice::WriteOnly);
     QTextStream stream(&file);
-    stream << "settings {" << endl <<
-              "    logfile = \"/tmp/lsyncd.log\"," << endl <<
-              "    statusFile = \"/tmp/lsyncd.status\"," << endl <<
-              "    nodaemon = true," << endl <<
-              "}" << endl;
-
-    for (int i = 0; i < size; i++){
-        QString sourcePath = generateTargetPath(m_backupPath, m_BackupElements->getAddedPath(i));
-        stream << "sync {" << endl <<
-                  "    default.rsync," << endl <<
-                  "    source = " << m_BackupElements->getAddedPath(i) << "," << endl <<
-                  "    target = " << sourcePath << "," << endl <<
-                  "}" << endl;
-
-    }
+    stream << m_LastConfig;
 }
 
 void LsyncdConfigModel::readFileLocation(const QUrl &url)
