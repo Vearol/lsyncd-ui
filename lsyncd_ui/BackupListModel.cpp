@@ -121,7 +121,7 @@ bool BackupListModel::isEmpty()
     return m_BackupItems.size() == 0;
 }
 
-QString BackupListModel::getAddedPath(int index)
+const QString &BackupListModel::getAddedPath(int index) const
 {
     return m_BackupItems[index]->getBackupPath();
 }

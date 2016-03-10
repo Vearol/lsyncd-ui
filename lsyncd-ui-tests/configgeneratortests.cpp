@@ -1,7 +1,6 @@
 #include "configgeneratortests.h"
 #include <QUrl>
 #include <QStringList>
-#include <QThread>
 #include "../lsyncd_ui/BackupItem.h"
 #include "../lsyncd_ui/BackupListModel.h"
 #include "../lsyncd_ui/LsyncdConfigModel.h"

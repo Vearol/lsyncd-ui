@@ -34,7 +34,7 @@ public:
     Q_INVOKABLE void removeAll();
     Q_INVOKABLE void removeSingle(int index);
     Q_INVOKABLE bool isEmpty();
-    QString getAddedPath(int index);
+    const QString &getAddedPath(int index) const;
 
 signals:
     void rowCountIsChanged();

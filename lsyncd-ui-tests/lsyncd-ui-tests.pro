@@ -13,10 +13,14 @@ SOURCES += main.cpp \
     ../lsyncd_ui/BackupItem.cpp \
     ../lsyncd_ui/BackupListModel.cpp \
     ../lsyncd_ui/LsyncdConfigModel.cpp \
-    configgeneratortests.cpp
+    configgeneratortests.cpp \
+    targetpathtests.cpp \
+    ../lsyncd_ui/pathhelpers.cpp
 
 HEADERS += \
     ../lsyncd_ui/BackupItem.h \
     ../lsyncd_ui/BackupListModel.h \
     ../lsyncd_ui/LsyncdConfigModel.h \
-    configgeneratortests.h
+    configgeneratortests.h \
+    targetpathtests.h \
+    ../lsyncd_ui/pathhelpers.h

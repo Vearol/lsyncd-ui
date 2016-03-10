@@ -6,7 +6,8 @@ CONFIG += c++11
 SOURCES += main.cpp \
     BackupListModel.cpp \
     BackupItem.cpp \
-    LsyncdConfigModel.cpp
+    LsyncdConfigModel.cpp \
+    pathhelpers.cpp
 
 RESOURCES += qml.qrc
 
@@ -19,7 +20,8 @@ include(deployment.pri)
 HEADERS += \
     BackupListModel.h \
     BackupItem.h \
-    LsyncdConfigModel.h
+    LsyncdConfigModel.h \
+    pathhelpers.h
 
 DISTFILES += \
     assets/folder_blue.svg \

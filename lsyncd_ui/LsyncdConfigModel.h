@@ -17,7 +17,6 @@ public:
     QString readBackupPath() const;
     void setBackupPath(const QString &backupPath);
     void setBackupElements(BackupListModel *BackupElements);
-    QString generateTargetPath(QString backupDisk, QString source);
 
     Q_INVOKABLE void useBackupPath(const QUrl &url);
     Q_INVOKABLE QString createConfig();
@@ -28,7 +27,8 @@ signals:
     void backupPathChanged();
 
 private:
-    QString m_backupPath;
+    QString m_BackupPath;
+    QString m_LastConfig;
     BackupListModel *m_BackupElements;
     QString m_savedFilePath;
 };
