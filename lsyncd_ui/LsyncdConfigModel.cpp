@@ -54,10 +54,10 @@ QString LsyncdConfigModel::createConfig()
     for (int i = 0; i < size; i++){
         const QString &itemsPath = m_BackupElements->getAddedPath(i);
         sourcePath = Helpers::generateTargetPath(m_BackupPath, itemsPath);
-        stream << "sync {" << endl <<
+        stream << endl << "sync {" << endl <<
                   "    default.rsync," << endl <<
-                  "    source = " << itemsPath << "," << endl <<
-                  "    target = " << sourcePath << "," << endl <<
+                  "    source = \"" << itemsPath << "\"," << endl <<
+                  "    target = \"" << sourcePath << "\"" << endl <<
                   "}" << endl;
     }
 
