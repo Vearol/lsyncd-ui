@@ -52,15 +52,6 @@ Window {
     }
 
     FileDialog {
-        id: saveToFileDialog
-        title: "Please choose a path"
-        folder: shortcuts.home
-        onAccepted: {
-            lsyncdConfigModel.readFileLocation(saveToFileDialog.fileUrl)
-        }
-    }
-
-    FileDialog {
         id: folderDialog
         title: "Please choose a folder"
         folder: shortcuts.home
@@ -142,7 +133,6 @@ Window {
                     model: tabView.count
                     delegate: Rectangle {
                         id: showType
-
                         width: 100
                         height: 150
                         color: (tabView.currentIndex == index) ? Colors.applicationBackgroundColor : Colors.notActiveTabColor
@@ -230,6 +220,7 @@ Window {
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 65
+            property int tabControl: tabView.currentIndex = 1
 
             Tab {
                 title: "Tree"
@@ -241,7 +232,6 @@ Window {
 
             Tab {
                 id: tabList
-
                 active: true
                 property string activeBackground: Images.listBlue
                 property string notActiveBackground: Images.listGray

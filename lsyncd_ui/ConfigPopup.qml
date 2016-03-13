@@ -10,6 +10,17 @@ Item {
     id: myPopupComponent
     anchors.fill: parent
 
+    FileDialog {
+        id: saveToFileDialog
+        title: "Please choose a path"
+        folder: shortcuts.home
+        selectExisting: false
+        onAccepted: {
+            lsyncdConfigModel.readFileLocation(saveToFileDialog.fileUrl)
+            lsyncdConfigModel.saveToFile()
+        }
+    }
+
     function closePopup() {
         myPopupComponent.destroy()
     }
@@ -112,7 +123,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         onClicked: {
                             saveToFileDialog.open()
-                            lsyncdConfigModel.saveToFile()
+                           // lsyncdConfigModel.saveToFile()
                         }
 
                     }
