@@ -229,15 +229,30 @@ Window {
                 property string notActiveBackground: Images.treeGray
                 property string hoverBackground: Images.treeWhite
 
-                TreeView {
+                Rectangle {
                     anchors.fill: parent
-                    TableViewColumn {
-                        role: "fileName"
+                    anchors.margins: 10
+
+                    ElTreeView {
+                        anchors.fill: parent
+                        model: fileSystemModel
+                        itemDelegate: Rectangle {
+                            color: ( styleData.row % 2 == 0 ) ? Colors.buttonsPanelColor : Colors.applicationListColor
+                            height: 25
+
+                            Text {
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.left: parent.left
+                                text: styleData.value
+                            }
+                        }
+
+                        TableViewColumn {
+                            role: "fileName"
+                        }
+
                     }
-                    model: my_model
                 }
-
-
             }
 
             Tab {

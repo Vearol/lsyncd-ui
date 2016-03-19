@@ -24,5 +24,6 @@
         <file>ConfigPopup.qml</file>
         <file>ActiveButton.qml</file>
         <file>ConfigButton.qml</file>
+        <file>ElTreeView.qml</file>
     </qresource>
 </RCC>

@@ -3,7 +3,7 @@
 #include <QQmlContext>
 #include "BackupListModel.h"
 #include "LsyncdConfigModel.h"
-#include <QFileSystemModel>
+#include "FileSystemModel.h"
 #include <QTreeView>
 
 
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     QQmlContext *context = engine.rootContext();
     context->setContextProperty("backupModel", &model);
     context->setContextProperty("lsyncdConfigModel", &lsmodel);
-    context->setContextProperty("my_model", &fsmodel);
+    context->setContextProperty("fileSystemModel", &fsmodel);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
