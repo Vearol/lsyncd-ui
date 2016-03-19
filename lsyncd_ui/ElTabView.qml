@@ -7,6 +7,9 @@ TabView {
     style: TabViewStyle {
         property color backgroundColor: Colors.applicationBackgroundColor
         property double tabHeight: 150
+        Component.onCompleted: {
+            tabView.currentIndex = 1
+        }
 
         frame: Rectangle {
             color: Colors.applicationBackgroundColor

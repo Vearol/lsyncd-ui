@@ -1,16 +1,16 @@
-import QtQuick 2.3
+import QtQuick 2.5
 import QtQuick.Layouts 1.1
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs  1.2
 import QtQuick.Controls.Styles 1.1
+import QtQml.Models 2.2
 import "Colors.js" as Colors
 import "Images.js" as Images
 
 Window {
     id: mainWindow
     visible: true
-
     x: Screen.width / 2 - width / 2
     y: Screen.height / 2 - height / 2
     minimumWidth: 1020
@@ -220,13 +220,23 @@ Window {
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 65
-            property int tabControl: tabView.currentIndex = 1
 
             Tab {
+                id: treeMode
+
                 title: "Tree"
                 property string activeBackground: Images.treeBlue
                 property string notActiveBackground: Images.treeGray
                 property string hoverBackground: Images.treeWhite
+
+                TreeView {
+                    anchors.fill: parent
+                    TableViewColumn {
+                        role: "fileName"
+                    }
+                    model: my_model
+                }
+
 
             }
 

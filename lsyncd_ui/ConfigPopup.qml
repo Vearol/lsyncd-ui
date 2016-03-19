@@ -50,22 +50,6 @@ Item {
 
             property real old_x : 0
             property real old_y : 0
-
-            onPressed:{
-                var tmp = mapToItem(myPopupComponent, mouse.x, mouse.y);
-                old_x = tmp.x;
-                old_y = tmp.y;
-
-                var dialogPoint = mapToItem(dialogWindow, mouse.x, mouse.y);
-                if (!Common.isInComponent(dialogPoint, dialogWindow)) {
-                    closePopup()
-                }
-            }
-
-            onPositionChanged: {
-                var old_xy = Common.movePopupInsideComponent(myPopupComponent, dialogWindow, mouse, old_x, old_y);
-                old_x = old_xy[0]; old_y = old_xy[1];
-            }
         }
 
         Rectangle {
@@ -90,9 +74,11 @@ Item {
                     TextEdit {
                         anchors.fill: parent
                         anchors.margins: 35
+                        selectByMouse: true
 
                         text: lsyncdConfigModel.createConfig();
                     }
+
                 }
 
                 RowLayout {
@@ -123,7 +109,6 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         onClicked: {
                             saveToFileDialog.open()
-                           // lsyncdConfigModel.saveToFile()
                         }
 
                     }
