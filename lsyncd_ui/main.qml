@@ -141,6 +141,9 @@ Window {
 
                             Image {
                                 anchors.centerIn: parent
+                                fillMode: Image.PreserveAspectFit
+                                sourceSize.width: parent.width * 0.4
+                                sourceSize.height: parent.height * 0.4
 
                                 source: {
                                     var tab = tabView.getTab(index);
@@ -335,6 +338,9 @@ Window {
                                     id: iconImage
                                     anchors.left: parent.left
                                     anchors.leftMargin: 25
+                                    fillMode: Image.PreserveAspectFit
+                                    sourceSize.height: parent.height * 0.6
+                                    sourceSize.width: parent.height * 0.6
                                     anchors.verticalCenter: parent.verticalCenter
                                     source: isfile ? Images.fileUrl : Images.folderUrl
                                     cache: true
@@ -342,7 +348,6 @@ Window {
 
                                 Text {
                                     id: pathText
-
                                     anchors.left: iconImage.right
                                     anchors.leftMargin: 20
                                     anchors.verticalCenter: parent.verticalCenter
@@ -350,24 +355,13 @@ Window {
                                     text: path
                                 }
 
-                                MouseArea {
-                                    id: deleteOne
-
-                                    width: 30
-                                    anchors.top: addedFolder.top
-                                    anchors.bottom: addedFolder.bottom
-                                    anchors.right: addedFolder.right
-
-                                    hoverEnabled: true
-
-                                    onClicked: backupModel.removeSingle(index)
-                                }
-
                                 Image {
-
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    anchors.right: deleteOne.right
+                                    anchors.right: parent.right
                                     anchors.rightMargin: 10
+                                    sourceSize.height: parent.height / 2
+                                    sourceSize.width: parent.height / 2
+                                    fillMode: Image.PreserveAspectFit
+                                    anchors.verticalCenter: parent.verticalCenter
 
                                     source: {
                                         var imageClose;
@@ -383,6 +377,14 @@ Window {
                                         }
 
                                         return imageClose;
+                                    }
+
+                                    MouseArea {
+                                        id: deleteOne
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+
+                                        onClicked: backupModel.removeSingle(index)
                                     }
                                 }
 

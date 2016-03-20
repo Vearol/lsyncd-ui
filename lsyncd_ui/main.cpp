@@ -3,7 +3,7 @@
 #include <QQmlContext>
 #include "BackupListModel.h"
 #include "LsyncdConfigModel.h"
-#include "FileSystemModel.h"
+#include <QFileSystemModel>
 #include <QTreeView>
 
 
