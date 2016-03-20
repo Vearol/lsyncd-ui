@@ -141,9 +141,12 @@ Window {
 
                             Image {
                                 anchors.centerIn: parent
-                                fillMode: Image.PreserveAspectFit
-                                sourceSize.width: parent.width * 0.4
-                                sourceSize.height: parent.height * 0.4
+                                fillMode: Image.Pad
+                                anchors.verticalCenterOffset: index == 0 ? -parent.width*0.1 : 0
+                                property double scale: index == 0 ? 1.857142 : 1.175
+                                property double basicScale: index == 0 ? 0.3 : 0.35
+                                sourceSize.width: parent.width * basicScale
+                                sourceSize.height: parent.width * basicScale * scale
 
                                 source: {
                                     var tab = tabView.getTab(index);
@@ -338,9 +341,10 @@ Window {
                                     id: iconImage
                                     anchors.left: parent.left
                                     anchors.leftMargin: 25
-                                    fillMode: Image.PreserveAspectFit
-                                    sourceSize.height: parent.height * 0.6
-                                    sourceSize.width: parent.height * 0.6
+                                    fillMode: Image.Pad
+                                    property double scale: 1.25
+                                    sourceSize.height: parent.height * 0.5
+                                    sourceSize.width: parent.height * 0.5 * scale
                                     anchors.verticalCenter: parent.verticalCenter
                                     source: isfile ? Images.fileUrl : Images.folderUrl
                                     cache: true
