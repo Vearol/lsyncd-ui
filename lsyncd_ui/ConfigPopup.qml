@@ -66,19 +66,22 @@ Item {
 
                 Rectangle {
                     anchors.fill: parent
-                    anchors.margins: 20
+                    color: Colors.normalTextColor
+                    anchors.leftMargin: 20
+                    anchors.rightMargin: 20
+                    anchors.topMargin: 20
                     anchors.bottomMargin: 60
 
-                    color: Colors.normalTextColor
-
-                    TextEdit {
+                    ElScrollView {
                         anchors.fill: parent
-                        anchors.margins: 35
-                        selectByMouse: true
+                        anchors.margins: 10
 
-                        text: lsyncdConfigModel.createConfig();
+                        TextEdit {
+                            selectByMouse: true
+                            clip: true
+                            text: lsyncdConfigModel.createConfig();
+                        }
                     }
-
                 }
 
                 RowLayout {
