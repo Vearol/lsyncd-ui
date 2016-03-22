@@ -74,8 +74,7 @@ Item {
 
                     ElScrollView {
                         anchors.fill: parent
-                        anchors.margins: 10
-
+                        anchors.margins: 35
                         TextEdit {
                             selectByMouse: true
                             clip: true

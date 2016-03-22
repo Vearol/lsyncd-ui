@@ -7,7 +7,8 @@ SOURCES += main.cpp \
     BackupListModel.cpp \
     BackupItem.cpp \
     LsyncdConfigModel.cpp \
-    pathhelpers.cpp
+    pathhelpers.cpp \
+    TreeViewModel.cpp
 
 RESOURCES += qml.qrc
 
@@ -21,7 +22,8 @@ HEADERS += \
     BackupListModel.h \
     BackupItem.h \
     LsyncdConfigModel.h \
-    pathhelpers.h
+    pathhelpers.h \
+    TreeViewModel.h
 
 DISTFILES += \
     assets/folder_blue.svg \

@@ -16,7 +16,7 @@ public:
 
     QString readBackupPath() const;
     void setBackupPath(const QString &backupPath);
-    void setBackupElements(BackupListModel *BackupElements);
+    void copyBackupElementsForConfig(BackupListModel *BackupElements);
 
     Q_INVOKABLE void useBackupPath(const QUrl &url);
     Q_INVOKABLE QString createConfig();

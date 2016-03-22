@@ -3,9 +3,7 @@
 #include <QQmlContext>
 #include "BackupListModel.h"
 #include "LsyncdConfigModel.h"
-#include <QFileSystemModel>
-#include <QTreeView>
-
+#include "TreeViewModel.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,8 +11,10 @@ int main(int argc, char *argv[])
 
     BackupListModel model;
     LsyncdConfigModel lsmodel;
-    lsmodel.setBackupElements(&model);
-    QFileSystemModel fsmodel;
+    TreeViewModel fsmodel;
+
+    lsmodel.copyBackupElementsForConfig(&model);
+    fsmodel.copyBackupElementsForTree(&model);
     fsmodel.setRootPath("/");
 
     QQmlApplicationEngine engine;

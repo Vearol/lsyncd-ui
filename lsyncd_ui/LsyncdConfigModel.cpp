@@ -28,7 +28,7 @@ void LsyncdConfigModel::setBackupPath(const QString &backupPath)
     emit backupPathChanged();
 }
 
-void LsyncdConfigModel::setBackupElements(BackupListModel *BackupElements)
+void LsyncdConfigModel::copyBackupElementsForConfig(BackupListModel *BackupElements)
 {
     m_BackupElements = BackupElements;
 }
