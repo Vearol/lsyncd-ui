@@ -247,42 +247,9 @@ Window {
                             color: ( styleData.row % 2 == 0 ) ? Colors.buttonsPanelColor : Colors.applicationListColor
                             height: 25
 
-                            MouseArea {
-                                id: selectFolder
-                                width: 20
-                                anchors.top: parent.top
-                                anchors.bottom: parent.bottom
-                                anchors.left: parent.left
-
-                                hoverEnabled: true
-
-                            }
-
-                            Image {
-
-                                anchors.verticalCenter: parent.verticalCenter
-                                anchors.left: selectFolder.left
-
-                                source: {
-                                    var imageChoose;
-                                    var k = 0;
-
-                                    if (selectFolder.containsMouse) {
-                                        imageChoose = Images.deleteBlue;
-                                    }
-                                    if (selectFolder.pressed) {
-                                        k++;
-                                    }
-                                    ( k % 2 == 0 ) ? imageChoose = Images.deleteGray : imageChoose = Images.deleteBlue
-
-                                    return imageChoose;
-                                }
-                            }
-
                             Text {
                                 anchors.verticalCenter: parent.verticalCenter
                                 anchors.left: parent.left
-                                anchors.leftMargin: 55
                                 text: styleData.value
                             }
                         }
@@ -375,10 +342,9 @@ Window {
                                     id: iconImage
                                     anchors.left: parent.left
                                     anchors.leftMargin: 25
-                                    fillMode: Image.Pad
-                                    property double scale: 1.25
-                                    sourceSize.height: parent.height * 0.5
-                                    sourceSize.width: parent.height * 0.5 * scale
+                                    fillMode: Image.PreserveAspectFit
+                                    sourceSize.height: parent.height * 0.6
+                                    sourceSize.width: parent.height * 0.6
                                     anchors.verticalCenter: parent.verticalCenter
                                     source: isfile ? Images.fileUrl : Images.folderUrl
                                     cache: true
