@@ -35,6 +35,7 @@ public:
     Q_INVOKABLE void removeSingle(int index);
     Q_INVOKABLE bool isEmpty();
     const QString &getAddedPath(int index) const;
+    const QString &getAddedFile(int index) const;
 
 signals:
     void rowCountIsChanged();
@@ -42,7 +43,7 @@ signals:
 private:
     QVector<BackupItem*> m_BackupItems;
     QSet<QString> m_AddedPaths;
-
+    QVector<QString> m_FileNames;
 };
 
 

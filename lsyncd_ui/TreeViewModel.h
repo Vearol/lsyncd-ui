@@ -6,6 +6,7 @@
 
 class TreeViewModel : public QFileSystemModel
 {
+    Q_OBJECT
 public:
     TreeViewModel();
 

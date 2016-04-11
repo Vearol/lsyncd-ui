@@ -60,6 +60,7 @@ void BackupListModel::addItems(const QList<QUrl> &urls)
         QString path = urls[i].toLocalFile();
         if (!m_AddedPaths.contains(path) && !originalPaths.contains(path)) {
             originalPaths.insert(path);
+            m_FileNames.push_back(urls[i].fileName());
         }
     }
 
@@ -121,11 +122,15 @@ bool BackupListModel::isEmpty()
     return m_BackupItems.size() == 0;
 }
 
+const QString &BackupListModel::getAddedFile(int index) const
+{
+    return m_FileNames[index];
+}
+
 const QString &BackupListModel::getAddedPath(int index) const
 {
     return m_BackupItems[index]->getBackupPath();
 }
-
 
 
 

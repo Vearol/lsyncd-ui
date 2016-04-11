@@ -25,5 +25,6 @@
         <file>ActiveButton.qml</file>
         <file>ConfigButton.qml</file>
         <file>ElTreeView.qml</file>
+        <file>ElCircle.qml</file>
     </qresource>
 </RCC>

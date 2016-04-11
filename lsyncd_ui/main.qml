@@ -247,9 +247,43 @@ Window {
                             color: ( styleData.row % 2 == 0 ) ? Colors.buttonsPanelColor : Colors.applicationListColor
                             height: 25
 
+                            ElCircle {
+                                id: chooseIcon
+                                iconColor: {
+                                    var circleColor = Colors.disabledTextColor;
+                                    if (fileSystemModel.isAdded(styleData.value))
+                                        circleColor = Colors.blueActiveColor;
+                                    return circleColor
+                                }
+                                anchors.left: parent.left
+                                anchors.leftMargin: 25
+                            }
+
+                            MouseArea {
+                                id: selectCircle
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.left: parent.left
+                                anchors.leftMargin: 25
+                                width: 15
+                            }
+
+                            Image {
+                                id: fileImage
+                                anchors.left: chooseIcon.right
+                                anchors.leftMargin: 15
+                                fillMode: Image.PreserveAspectFit
+                                sourceSize.height: parent.height * 0.6
+                                sourceSize.width: parent.height * 0.6
+                                anchors.verticalCenter: parent.verticalCenter
+                                //source: isfile ? Images.fileUrl : Images.folderUrl
+                                cache: true
+                            }
+
                             Text {
                                 anchors.verticalCenter: parent.verticalCenter
-                                anchors.left: parent.left
+                                anchors.left: fileImage.right
+                                anchors.leftMargin: 5
                                 text: styleData.value
                             }
                         }
