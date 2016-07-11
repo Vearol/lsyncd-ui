@@ -244,16 +244,26 @@ Window {
                         anchors.fill: parent
                         model: fileSystemModel
                         itemDelegate: Rectangle {
+                            id: delegateRectangle
                             color: ( styleData.row % 2 == 0 ) ? Colors.buttonsPanelColor : Colors.applicationListColor
                             height: 25
 
                             ElCircle {
                                 id: chooseIcon
-                                iconColor: {
+                                borderColor: {
                                     var circleColor = Colors.disabledTextColor;
-                                    if (fileSystemModel.isAdded(styleData.value))
+                                    if (fileSystemModel.isAdded(styleData.value)){
+                                        chooseIcon.insideColor = Colors.blueActiveColor;
                                         circleColor = Colors.blueActiveColor;
+                                    }
                                     return circleColor
+                                }
+                                insideColor: {
+                                    var filledColor = delegateRectangle.color;
+                                    if (fileSystemModel.isAdded(styleData.value)){
+                                        filledColor = Colors.blueActiveColor;
+                                    }
+                                    return filledColor
                                 }
                                 anchors.left: parent.left
                                 anchors.leftMargin: 25

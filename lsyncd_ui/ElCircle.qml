@@ -3,7 +3,8 @@ import "Colors.js" as Colors
 
 Item {
     id: elCircle
-    property color iconColor
+    property color borderColor
+    property color insideColor
     anchors.verticalCenter: parent.verticalCenter
 
     Rectangle {
@@ -12,14 +13,15 @@ Item {
         height: 15
         radius: width*0.5
         border.width: 1
-        border.color: iconColor
+        border.color: borderColor
 
         Rectangle {
             id: insideCircle
             anchors.fill: parent
             anchors.margins: 2
             radius: width*0.5
-            border.color: iconColor
+            border.color: borderColor
+            color: insideColor
         }
     }
 
