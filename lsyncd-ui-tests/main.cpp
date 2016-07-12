@@ -1,8 +1,10 @@
+
 #include <QCoreApplication>
 #include <QtTest/QtTest>
 #include <QThread>
 #include "configgeneratortests.h"
 #include "targetpathtests.h"
+#include "filesystemtreetest.h"
 
 #define QTEST_CLASS(TestObject, vName, result) \
     TestObject vName; \
@@ -16,6 +18,7 @@ int main(int argc, char *argv[]) {
 
     QTEST_CLASS(ConfigGeneratorTests, cgt, result);
     QTEST_CLASS(TargetPathTests, tpt, result);
+    QTEST_CLASS(FileSystemTreeTest, fstt, result);
 
     QThread::sleep(1);
 

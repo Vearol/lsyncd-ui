@@ -13,12 +13,13 @@ bool TreeViewModel::isAdded(const QString &filePath)
 {
     bool isAdded = false;
     int size = m_BackupElements->rowCount();
+
     for (int i = 0; i < size; i++){
         if (m_BackupElements->getAddedFile(i) == filePath)
             isAdded = true;
     }
-    return isAdded;
 
+    return isAdded;
 }
 
 
