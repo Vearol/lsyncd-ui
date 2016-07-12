@@ -263,7 +263,7 @@ Window {
 
                             MouseArea {
                                 property string pathFromTree: fileSystemModel.getFilePath(styleData.index)
-                                property bool isClicked: false
+                                property bool isClicked: true
                                 id: selectCircle
                                 anchors.top: parent.top
                                 anchors.bottom: parent.bottom
@@ -272,15 +272,14 @@ Window {
                                 width: 15
                                 hoverEnabled: true
                                 onClicked: {
-                                   /* if (isClicked) {
+                                    if (isClicked) {
                                         backupModel.addSingle(delegateRectangle.fullPath);
                                     }
                                     else {
                                         backupModel.removeBackupPath(delegateRectangle.fullPath);
                                     }
 
-                                    isClicked = !isClicked; */
-                                    backupModel.addSingle(delegateRectangle.fullPath);
+                                    isClicked = !isClicked;
                                 }
 
                             }
