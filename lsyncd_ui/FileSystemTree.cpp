@@ -1,4 +1,4 @@
-#include "filesystemtree.h"
+#include "FileSystemTree.h"
 #include <QDir>
 
 void deleteNode(BackupTreeNode *nodeToDelete);

@@ -3,9 +3,8 @@ import "Colors.js" as Colors
 
 Item {
     id: elCircle
-    property color borderColor
-    property color insideColor
-    anchors.verticalCenter: parent.verticalCenter
+    property color iconColor
+    property bool isFilled
 
     Rectangle {
         anchors.verticalCenter: parent.verticalCenter
@@ -13,16 +12,16 @@ Item {
         height: 15
         radius: width*0.5
         border.width: 1
-        border.color: borderColor
+        border.color: iconColor
 
         Rectangle {
             id: insideCircle
             anchors.fill: parent
             anchors.margins: 2
             radius: width*0.5
-            border.color: borderColor
-            color: insideColor
+            border.color: iconColor
+            border.width: isFilled ? 0 : 1
+            color: isFilled ? iconColor : "transparent"
         }
     }
-
 }

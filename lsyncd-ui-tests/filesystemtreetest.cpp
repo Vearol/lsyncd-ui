@@ -1,5 +1,5 @@
 #include "filesystemtreetest.h"
-#include "../lsyncd_ui/filesystemtree.h"
+#include "../lsyncd_ui/FileSystemTree.h"
 
 void FileSystemTreeTest::simpleAddPathTest() {
     BackupTree tree;

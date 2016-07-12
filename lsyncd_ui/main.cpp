@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QDir>
 #include "BackupListModel.h"
 #include "LsyncdConfigModel.h"
 #include "TreeViewModel.h"
@@ -16,6 +17,7 @@ int main(int argc, char *argv[])
     lsmodel.copyBackupElementsForConfig(&model);
     fsmodel.copyBackupElementsForTree(&model);
     fsmodel.setRootPath("/");
+    fsmodel.setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
 
     QQmlApplicationEngine engine;
 

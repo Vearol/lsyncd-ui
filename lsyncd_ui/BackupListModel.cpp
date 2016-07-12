@@ -7,7 +7,6 @@
 #include <iterator>
 #include <QString>
 #include <QDebug>
-#include "enums.h"
 
 BackupListModel::BackupListModel():
     QAbstractListModel()
@@ -63,6 +62,7 @@ void BackupListModel::addItems(const QList<QUrl> &urls)
         if (!m_AddedPaths.contains(path) && !originalPaths.contains(path)) {
             originalPaths.insert(path);
             m_FileNames.push_back(urls[i].fileName());
+            m_BackupTree.addBackupPath(path);
         }
     }
 
@@ -88,6 +88,13 @@ void BackupListModel::addItems(const QList<QUrl> &urls)
     emit rowCountIsChanged();
 }
 
+/* void BackupListModel::addSingle(const QModelIndex &index)
+{
+    QString path =
+    m_AddedPaths.insert(path);
+    m_BackupItems.push_back(new BackupItem(path));
+    m_BackupTree.addBackupPath(path);
+}*/
 
 void BackupListModel::removeAll()
 {
@@ -124,27 +131,24 @@ bool BackupListModel::isEmpty()
     return m_BackupItems.size() == 0;
 }
 
+void BackupListModel::removeBackupPath(const QString &path)
+{
+    m_BackupTree.removeBackupPath(path);
+}
+
+bool BackupListModel::isFullBackup(const QString &path) const
+{
+    return m_BackupTree.isFullBackup(path);
+}
+
+bool BackupListModel::isPartialBackup(const QString &path) const
+{
+    return m_BackupTree.isPartialBackup(path);
+}
+
 const QString &BackupListModel::getAddedFile(int index) const
 {
     return m_FileNames[index];
-}
-
-NodeBackupType BackupListModel::retrieveBackupType(const QString &path) const
-{
-    if (m_AddedPaths.contains(path)) { return BackupTypeFull; }
-
-    QDir dir(path);
-    while (dir.cdUp()) {
-        const QString &currPath = dir.path();
-        if (m_AddedPaths.contains(currPath)) { return BackupTypeFull; }
-    }
-
-    dir.cd(path);
-    auto entries = dir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot);
-    for (auto &entry: entries) {
-        QString childPath = entry.absolutePath();
-        if (m_AddedPaths.contains(childPath)) { return BackupTypeFull; }
-    }
 }
 
 const QString &BackupListModel::getAddedPath(int index) const

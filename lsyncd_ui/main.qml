@@ -249,34 +249,27 @@ Window {
                             height: 25
 
                             ElCircle {
+                                property string fullPath: fileSystemModel.getFilePath(styleData.index)
+                                property bool isFullBackup: backupModel.isFullBackup(fullPath)
+                                property bool isPartialBackup: backupModel.isPartialBackup(fullPath)
                                 id: chooseIcon
-                                borderColor: {
-                                    var circleColor = Colors.disabledTextColor;
-                                    if (fileSystemModel.isAdded(styleData.value)){
-                                        chooseIcon.insideColor = Colors.blueActiveColor;
-                                        circleColor = Colors.blueActiveColor;
-                                    }
-                                    return circleColor
-                                }
-                                insideColor: {
-                                    var filledColor = delegateRectangle.color;
-                                    if (fileSystemModel.isAdded(styleData.value)){
-                                        filledColor = Colors.blueActiveColor;
-                                    }
-                                    return filledColor
-                                }
                                 anchors.left: parent.left
                                 anchors.leftMargin: 25
+                                iconColor: isFullBackup ? Colors.blueActiveColor: Colors.disabledTextColor
+                                isFilled: isPartialBackup || isFullBackup
+                                anchors.verticalCenter: parent.verticalCenter
                             }
 
-                            MouseArea {
+                            /*MouseArea {
                                 id: selectCircle
                                 anchors.top: parent.top
                                 anchors.bottom: parent.bottom
                                 anchors.left: parent.left
                                 anchors.leftMargin: 25
                                 width: 15
-                            }
+                                hoverEnabled: true
+                                onClicked: backupModel.addSingle(index);
+                            }*/
 
                             Image {
                                 id: fileImage
@@ -294,6 +287,14 @@ Window {
                                 anchors.verticalCenter: parent.verticalCenter
                                 anchors.left: fileImage.right
                                 anchors.leftMargin: 5
+                                color: {
+                                    var treeTextColor = Colors.pathTextColor;
+                                    if (selectCircle.containsMouse){
+                                        treeTextColor = Colors.blueActiveColor;
+                                    }
+                                    return treeTextColor
+                                }
+
                                 text: styleData.value
                             }
                         }

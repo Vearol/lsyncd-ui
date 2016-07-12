@@ -9,7 +9,7 @@ SOURCES += main.cpp \
     LsyncdConfigModel.cpp \
     pathhelpers.cpp \
     TreeViewModel.cpp \
-    filesystemtree.cpp
+    FileSystemTree.cpp
 
 RESOURCES += qml.qrc
 
@@ -25,8 +25,7 @@ HEADERS += \
     LsyncdConfigModel.h \
     pathhelpers.h \
     TreeViewModel.h \
-    enums.h \
-    filesystemtree.h
+    FileSystemTree.h
 
 DISTFILES += \
     assets/folder_blue.svg \
