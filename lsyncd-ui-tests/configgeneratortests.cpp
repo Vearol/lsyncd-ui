@@ -29,7 +29,7 @@ void COMPARE_STRINGS(const QString &actual, const QString &expected) {
 void ConfigGeneratorTests::generateConfigWithNoItemsTest() {
     LsyncdConfigModel lsyncdModel;
     BackupListModel listModel;
-    lsyncdModel.setBackupElements(&listModel);
+    lsyncdModel.copyBackupElementsForConfig(&listModel);
 
     QStringList configLines;
     configLines << "settings {"
@@ -47,7 +47,7 @@ void ConfigGeneratorTests::generateConfigWithNoItemsTest() {
 void ConfigGeneratorTests::generateConfigWithOneItemTest() {
     LsyncdConfigModel lsyncdModel;
     BackupListModel listModel;
-    lsyncdModel.setBackupElements(&listModel);
+    lsyncdModel.copyBackupElementsForConfig(&listModel);
 
     QList<QUrl> dirsList;
     dirsList << QUrl::fromLocalFile("/home/testuser/dir1");
@@ -77,7 +77,7 @@ void ConfigGeneratorTests::generateConfigWithOneItemTest() {
 void ConfigGeneratorTests::generateConfigWithSeveralItemsTest() {
     LsyncdConfigModel lsyncdModel;
     BackupListModel listModel;
-    lsyncdModel.setBackupElements(&listModel);
+    lsyncdModel.copyBackupElementsForConfig(&listModel);
 
     QList<QUrl> dirsList;
     dirsList << QUrl::fromLocalFile("/home/testuser/dir1")

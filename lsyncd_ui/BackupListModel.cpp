@@ -2,10 +2,12 @@
 #include "BackupItem.h"
 #include "LsyncdConfigModel.h"
 #include <QUrl>
+#include <QDir>
 #include <QList>
 #include <iterator>
 #include <QString>
 #include <QDebug>
+#include "enums.h"
 
 BackupListModel::BackupListModel():
     QAbstractListModel()
@@ -125,6 +127,24 @@ bool BackupListModel::isEmpty()
 const QString &BackupListModel::getAddedFile(int index) const
 {
     return m_FileNames[index];
+}
+
+NodeBackupType BackupListModel::retrieveBackupType(const QString &path) const
+{
+    if (m_AddedPaths.contains(path)) { return BackupTypeFull; }
+
+    QDir dir(path);
+    while (dir.cdUp()) {
+        const QString &currPath = dir.path();
+        if (m_AddedPaths.contains(currPath)) { return BackupTypeFull; }
+    }
+
+    dir.cd(path);
+    auto entries = dir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot);
+    for (auto &entry: entries) {
+        QString childPath = entry.absolutePath();
+        if (m_AddedPaths.contains(childPath)) { return BackupTypeFull; }
+    }
 }
 
 const QString &BackupListModel::getAddedPath(int index) const

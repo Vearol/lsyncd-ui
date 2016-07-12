@@ -8,6 +8,7 @@
 #include <QUrl>
 #include <QSet>
 #include "BackupItem.h"
+#include "enums.h"
 
 class BackupListModel : public QAbstractListModel
 {
@@ -34,6 +35,9 @@ public:
     Q_INVOKABLE void removeAll();
     Q_INVOKABLE void removeSingle(int index);
     Q_INVOKABLE bool isEmpty();
+    Q_INVOKABLE bool isFullyBackedUp(const QString &path) const { return retrieveBackupType(path) == BackupTypeFull; }
+    Q_INVOKABLE bool isPartiallyBackedUp(const QString &path) const { return retrieveBackupType(path) == BackupTypePartial; }
+    Q_INVOKABLE bool isNotBackedUp(const QString &path) const { return retrieveBackupType(path) == BackupTypeNone; }
     const QString &getAddedPath(int index) const;
     const QString &getAddedFile(int index) const;
 
@@ -41,8 +45,12 @@ signals:
     void rowCountIsChanged();
 
 private:
+    NodeBackupType retrieveBackupType(const QString &path) const;
+
+private:
     QVector<BackupItem*> m_BackupItems;
     QSet<QString> m_AddedPaths;
+
     QVector<QString> m_FileNames;
 };
 
