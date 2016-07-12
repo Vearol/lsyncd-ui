@@ -32,7 +32,7 @@ public:
 
 public:
     Q_INVOKABLE void addItems(const QList<QUrl> &urls);  
-    //Q_INVOKABLE void addSingle(const QModelIndex &index);
+    Q_INVOKABLE void addSingle(const QString &path);
     Q_INVOKABLE void removeAll();
     Q_INVOKABLE void removeSingle(int index);
     Q_INVOKABLE bool isEmpty();

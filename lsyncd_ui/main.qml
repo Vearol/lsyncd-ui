@@ -243,15 +243,16 @@ Window {
                     ElTreeView {
                         anchors.fill: parent
                         model: fileSystemModel
+
                         itemDelegate: Rectangle {
                             id: delegateRectangle
+                            property string fullPath: fileSystemModel.getFilePath(styleData.index)
                             color: ( styleData.row % 2 == 0 ) ? Colors.buttonsPanelColor : Colors.applicationListColor
                             height: 25
 
                             ElCircle {
-                                property string fullPath: fileSystemModel.getFilePath(styleData.index)
-                                property bool isFullBackup: backupModel.isFullBackup(fullPath)
-                                property bool isPartialBackup: backupModel.isPartialBackup(fullPath)
+                                property bool isFullBackup: backupModel.isFullBackup(delegateRectangle.fullPath)
+                                property bool isPartialBackup: backupModel.isPartialBackup(delegateRectangle.fullPath)
                                 id: chooseIcon
                                 anchors.left: parent.left
                                 anchors.leftMargin: 25
@@ -260,7 +261,9 @@ Window {
                                 anchors.verticalCenter: parent.verticalCenter
                             }
 
-                            /*MouseArea {
+                            MouseArea {
+                                property string pathFromTree: fileSystemModel.getFilePath(styleData.index)
+                                property bool isClicked: false
                                 id: selectCircle
                                 anchors.top: parent.top
                                 anchors.bottom: parent.bottom
@@ -268,8 +271,19 @@ Window {
                                 anchors.leftMargin: 25
                                 width: 15
                                 hoverEnabled: true
-                                onClicked: backupModel.addSingle(index);
-                            }*/
+                                onClicked: {
+                                   /* if (isClicked) {
+                                        backupModel.addSingle(delegateRectangle.fullPath);
+                                    }
+                                    else {
+                                        backupModel.removeBackupPath(delegateRectangle.fullPath);
+                                    }
+
+                                    isClicked = !isClicked; */
+                                    backupModel.addSingle(delegateRectangle.fullPath);
+                                }
+
+                            }
 
                             Image {
                                 id: fileImage

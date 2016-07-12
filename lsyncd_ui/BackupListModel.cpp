@@ -88,13 +88,11 @@ void BackupListModel::addItems(const QList<QUrl> &urls)
     emit rowCountIsChanged();
 }
 
-/* void BackupListModel::addSingle(const QModelIndex &index)
+void BackupListModel::addSingle(const QString &path)
 {
-    QString path =
-    m_AddedPaths.insert(path);
-    m_BackupItems.push_back(new BackupItem(path));
+    addItems(QList<QUrl>() << QUrl::fromLocalFile(path));
     m_BackupTree.addBackupPath(path);
-}*/
+}
 
 void BackupListModel::removeAll()
 {
