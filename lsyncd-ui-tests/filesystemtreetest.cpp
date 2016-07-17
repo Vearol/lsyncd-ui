@@ -89,5 +89,25 @@ void FileSystemTreeTest::isInTheTreeTest() {
     QVERIFY(tree.isInTheTree("/a/b"));
     QVERIFY(!tree.isInTheTree("/a/b/c"));
     QVERIFY(tree.isFullBackup("/a/b/c"));
+}
 
+void FileSystemTreeTest::addParentPathTest() {
+    BackupTree tree;
+    tree.addBackupPath("/a/b/c");
+    tree.addBackupPath("/a/b/d");
+    tree.addBackupPath("/k/l/m");
+
+    tree.addBackupPath("/a/b");
+
+    QVERIFY(tree.isFullBackup("/a/b/c"));
+    QVERIFY(!tree.isInTheTree("/a/b/c"));
+
+    QVERIFY(tree.isFullBackup("/a/b/d"));
+    QVERIFY(!tree.isInTheTree("/a/b/d"));
+
+    QVERIFY(tree.isFullBackup("/a/b"));
+    QVERIFY(tree.isInTheTree("/a/b"));
+
+    QVERIFY(tree.isFullBackup("/k/l/m"));
+    QVERIFY(tree.isInTheTree("/k/l/m"));
 }
