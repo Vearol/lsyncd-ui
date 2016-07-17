@@ -111,3 +111,10 @@ void FileSystemTreeTest::addParentPathTest() {
     QVERIFY(tree.isFullBackup("/k/l/m"));
     QVERIFY(tree.isInTheTree("/k/l/m"));
 }
+
+void FileSystemTreeTest::ancestorPathTest() {
+    BackupTree tree;
+    tree.addBackupPath("/a");
+
+    QCOMPARE(tree.retrieveFirstAncestor("/a/b/c"), QLatin1String("/a"));
+}

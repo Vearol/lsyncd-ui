@@ -44,6 +44,7 @@ public:
     const QString &getAddedFile(int index) const;
 
 private:
+    void doAddItems(const QList<QUrl> &urls);
     void addSingle(const QString &path);
     void removeBackupPath(const QString &path);
 

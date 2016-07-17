@@ -263,7 +263,6 @@ Window {
 
                             MouseArea {
                                 property string pathFromTree: fileSystemModel.getFilePath(styleData.index)
-                                property bool isClicked: true
                                 id: selectCircle
                                 anchors.top: parent.top
                                 anchors.bottom: parent.bottom

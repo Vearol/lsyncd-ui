@@ -7,6 +7,7 @@
 #include <iterator>
 #include <QString>
 #include <QDebug>
+#include "pathhelpers.h"
 
 BackupListModel::BackupListModel():
     QAbstractListModel()
@@ -52,6 +53,89 @@ QHash<int, QByteArray> BackupListModel::roleNames() const
 
 void BackupListModel::addItems(const QList<QUrl> &urls)
 {
+    doAddItems(urls);
+}
+
+void BackupListModel::addSingle(const QString &path)
+{
+    addItems(QList<QUrl>() << QUrl::fromLocalFile(path));
+    m_BackupTree.addBackupPath(path);
+}
+
+void BackupListModel::removeAll()
+{
+    beginResetModel();
+
+    int size = m_BackupItems.size();
+    for (int i = 0; i < size; i++){
+        m_BackupTree.removeBackupPath(m_BackupItems[i]->getBackupPath());
+        delete m_BackupItems[i];
+    }
+    m_BackupItems.clear();
+    m_AddedPaths.clear();
+
+    endResetModel();
+
+    emit rowCountIsChanged();
+}
+
+void BackupListModel::removeSingle(int index)
+{
+    beginRemoveRows(QModelIndex(), index, index);
+    QString pathToRemove = m_BackupItems[index]->getBackupPath();
+
+    m_BackupTree.removeBackupPath(pathToRemove);
+    BackupItem *itemToRemove = m_BackupItems.takeAt(index);
+    delete itemToRemove;
+    m_AddedPaths.remove(pathToRemove);
+
+    endRemoveRows();
+
+    emit rowCountIsChanged();
+}
+
+bool BackupListModel::isEmpty()
+{
+    return m_BackupItems.size() == 0;
+}
+
+void BackupListModel::removeBackupPath(const QString &path)
+{
+    m_BackupTree.removeBackupPath(path);
+}
+
+bool BackupListModel::isFullBackup(const QString &path) const
+{
+    return m_BackupTree.isFullBackup(path);
+}
+
+bool BackupListModel::isPartialBackup(const QString &path) const
+{
+    return m_BackupTree.isPartialBackup(path);
+}
+
+void BackupListModel::switchPath(const QString &path)
+{
+    if (isFullBackup(path)) {
+        int size = m_BackupItems.size();
+        for (int i = 0; i < size; i++){
+            if (m_BackupItems[i]->getBackupPath() == path){
+                removeSingle(i);
+                break;
+            }
+        }
+    }
+    else {
+        addSingle(path);
+    }
+}
+
+const QString &BackupListModel::getAddedFile(int index) const
+{
+    return m_FileNames[index];
+}
+
+void BackupListModel::doAddItems(const QList<QUrl> &urls) {
     int size = urls.size();
     int existingSize = m_BackupItems.size();
 
@@ -86,86 +170,6 @@ void BackupListModel::addItems(const QList<QUrl> &urls)
     endInsertRows();
 
     emit rowCountIsChanged();
-}
-
-void BackupListModel::addSingle(const QString &path)
-{
-    addItems(QList<QUrl>() << QUrl::fromLocalFile(path));
-    m_BackupTree.addBackupPath(path);
-}
-
-void BackupListModel::removeAll()
-{
-    beginResetModel();
-
-    int size = m_BackupItems.size();
-    for (int i = 0; i < size; i++){
-        m_BackupTree.removeBackupPath(m_BackupItems[i]->getBackupPath());
-        delete m_BackupItems[i];
-    }
-    m_BackupItems.clear();
-    m_AddedPaths.clear();
-
-    endResetModel();
-
-    emit rowCountIsChanged();
-}
-
-void BackupListModel::removeSingle(int index)
-{
-    beginRemoveRows(QModelIndex(), index, index);
-    QString path = m_BackupItems[index]->getBackupPath();
-
-    m_BackupTree.removeBackupPath(path);
-    delete m_BackupItems[index];
-    m_AddedPaths.remove(path);
-    m_BackupItems.remove(index);
-
-    endRemoveRows();
-
-    emit rowCountIsChanged();
-}
-
-bool BackupListModel::isEmpty()
-{
-    return m_BackupItems.size() == 0;
-}
-
-void BackupListModel::removeBackupPath(const QString &path)
-{
-    m_BackupTree.removeBackupPath(path);
-}
-
-bool BackupListModel::isFullBackup(const QString &path) const
-{
-    return m_BackupTree.isFullBackup(path);
-}
-
-bool BackupListModel::isPartialBackup(const QString &path) const
-{
-    return m_BackupTree.isPartialBackup(path);
-}
-
-void BackupListModel::switchPath(const QString &path)
-{
-    bool isActive = true;
-    if ((isFullBackup(path)) && (isActive)) {
-        int size = m_BackupItems.size();
-        for (int i = 0; i < size; i++){
-            if (m_BackupItems[i]->getBackupPath() == path){
-                removeSingle(i);
-                break;
-            }
-        }
-    }
-    else addSingle(path);
-
-    isActive = !isActive;
-}
-
-const QString &BackupListModel::getAddedFile(int index) const
-{
-    return m_FileNames[index];
 }
 
 const QString &BackupListModel::getAddedPath(int index) const

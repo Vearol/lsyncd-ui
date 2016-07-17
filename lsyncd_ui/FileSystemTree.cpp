@@ -1,5 +1,6 @@
 #include "FileSystemTree.h"
 #include <QDir>
+#include <algorithm>
 
 void deleteNode(BackupTreeNode *nodeToDelete);
 
@@ -91,7 +92,8 @@ void BackupTree::removeBackupPath(const QString &path) {
 
 bool BackupTree::isFullBackup(const QString &path) const {
     bool processedAll = false;
-    auto *node = findNode(path, processedAll);
+    std::vector<BackupTreeNode*> descentPath;
+    auto *node = findNode(path, descentPath, processedAll);
 
     bool isFull = false;
     if (node != nullptr) {
@@ -107,18 +109,41 @@ bool BackupTree::isFullBackup(const QString &path) const {
 
 bool BackupTree::isPartialBackup(const QString &path) const {
     bool processedAll = false;
-    auto *node = findNode(path, processedAll);
+    std::vector<BackupTreeNode*> descentPath;
+    auto *node = findNode(path, descentPath, processedAll);
     return (node != nullptr) && (processedAll && (node->m_Child != nullptr));
 }
 
 bool BackupTree::isInTheTree(const QString &path) const {
     bool processedAll = false;
-    auto *node = findNode(path, processedAll);
+    std::vector<BackupTreeNode*> descentPath;
+    auto *node = findNode(path, descentPath, processedAll);
     bool result = (node != nullptr) && (node->m_Child == nullptr) && processedAll;
     return result;
 }
 
-BackupTreeNode *BackupTree::findNode(const QString &path, bool &processedAll) const {
+QString BackupTree::retrieveFirstAncestor(const QString &childPath) const {
+    bool processedAll = false;
+    std::vector<BackupTreeNode*> descentPath;
+    auto *node = findNode(childPath, descentPath, processedAll);
+
+    QString result;
+
+    if (node != nullptr) {
+        QStringList items;
+        items.reserve((int)descentPath.size());
+
+        std::for_each(descentPath.begin(), descentPath.end(), [&items](BackupTreeNode *node) {
+            items.append(node->m_Value);
+        });
+
+        result = items.join(QDir::separator());
+    }
+
+    return result;
+}
+
+BackupTreeNode *BackupTree::findNode(const QString &path, std::vector<BackupTreeNode *> &descentPath, bool &processedAll) const {
     QStringList parts = path.split(QDir::separator(), QString::SkipEmptyParts);
 
     BackupTreeNode *node = m_Root->m_Child;
@@ -132,6 +157,8 @@ BackupTreeNode *BackupTree::findNode(const QString &path, bool &processedAll) co
 
         BackupTreeNode *curr = node;
         BackupTreeNode *lastSibling = nullptr;
+
+        descentPath.push_back(parent);
 
         while ((curr != nullptr) && (curr->m_Value != part)) {
             lastSibling = curr;

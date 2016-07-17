@@ -30,9 +30,11 @@ public:
     bool isFullBackup(const QString &path) const;
     bool isPartialBackup(const QString &path) const;
     bool isInTheTree(const QString &path) const;
+    QString retrieveFirstAncestor(const QString &childPath) const;
 
 private:
-    BackupTreeNode *findNode(const QString &path, bool &processedAll) const;
+    BackupTreeNode *findNode(const QString &path, std::vector<BackupTreeNode*> &descentPath,
+                             bool &processedAll) const;
     void doDeleteNode(BackupTreeNode *nodeToLookIn, BackupTreeNode *parent,
                                  const QStringList &path, int currIndex);
     void freeNode(BackupTreeNode *nodeToDelete, BackupTreeNode *prevSibling, BackupTreeNode *parent);
