@@ -80,3 +80,14 @@ void FileSystemTreeTest::removeCleanupTest() {
     QVERIFY(tree.isFullBackup("/a/k/r/"));
     QVERIFY(tree.isPartialBackup("/a/k"));
 }
+
+void FileSystemTreeTest::isInTheTreeTest() {
+    BackupTree tree;
+    tree.addBackupPath("/a/b");
+
+    QVERIFY(!tree.isInTheTree("/a"));
+    QVERIFY(tree.isInTheTree("/a/b"));
+    QVERIFY(!tree.isInTheTree("/a/b/c"));
+    QVERIFY(tree.isFullBackup("/a/b/c"));
+
+}

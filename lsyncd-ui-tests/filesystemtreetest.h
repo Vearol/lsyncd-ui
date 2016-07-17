@@ -16,6 +16,7 @@ private slots:
     void addMoreCommonItemTest();
     void removePathsTest();
     void removeCleanupTest();
+    void isInTheTreeTest();
 };
 
 #endif // FILESYSTEMTREETEST_H

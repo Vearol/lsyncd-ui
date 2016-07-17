@@ -29,6 +29,7 @@ public:
     void removeBackupPath(const QString &path);
     bool isFullBackup(const QString &path) const;
     bool isPartialBackup(const QString &path) const;
+    bool isInTheTree(const QString &path) const;
 
 private:
     BackupTreeNode *findNode(const QString &path, bool &processedAll) const;

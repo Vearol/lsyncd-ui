@@ -111,6 +111,13 @@ bool BackupTree::isPartialBackup(const QString &path) const {
     return (node != nullptr) && (processedAll && (node->m_Child != nullptr));
 }
 
+bool BackupTree::isInTheTree(const QString &path) const {
+    bool processedAll = false;
+    auto *node = findNode(path, processedAll);
+    bool result = (node != nullptr) && (node->m_Child == nullptr) && processedAll;
+    return result;
+}
+
 BackupTreeNode *BackupTree::findNode(const QString &path, bool &processedAll) const {
     QStringList parts = path.split(QDir::separator(), QString::SkipEmptyParts);
 
