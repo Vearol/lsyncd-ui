@@ -272,16 +272,8 @@ Window {
                                 width: 15
                                 hoverEnabled: true
                                 onClicked: {
-                                    if (isClicked) {
-                                        backupModel.addSingle(delegateRectangle.fullPath);
-                                    }
-                                    else {
-                                        backupModel.removeBackupPath(delegateRectangle.fullPath);
-                                    }
-
-                                    isClicked = !isClicked;
+                                    backupModel.switchPath(fullPath);
                                 }
-
                             }
 
                             Image {

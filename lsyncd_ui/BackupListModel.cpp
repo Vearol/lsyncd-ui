@@ -100,6 +100,7 @@ void BackupListModel::removeAll()
 
     int size = m_BackupItems.size();
     for (int i = 0; i < size; i++){
+        m_BackupTree.removeBackupPath(m_BackupItems[i]->getBackupPath());
         delete m_BackupItems[i];
     }
     m_BackupItems.clear();
@@ -115,6 +116,7 @@ void BackupListModel::removeSingle(int index)
     beginRemoveRows(QModelIndex(), index, index);
     QString path = m_BackupItems[index]->getBackupPath();
 
+    m_BackupTree.removeBackupPath(path);
     delete m_BackupItems[index];
     m_AddedPaths.remove(path);
     m_BackupItems.remove(index);
@@ -142,6 +144,23 @@ bool BackupListModel::isFullBackup(const QString &path) const
 bool BackupListModel::isPartialBackup(const QString &path) const
 {
     return m_BackupTree.isPartialBackup(path);
+}
+
+void BackupListModel::switchPath(const QString &path)
+{
+    bool isActive = true;
+    if ((isFullBackup(path)) && (isActive)) {
+        int size = m_BackupItems.size();
+        for (int i = 0; i < size; i++){
+            if (m_BackupItems[i]->getBackupPath() == path){
+                removeSingle(i);
+                break;
+            }
+        }
+    }
+    else addSingle(path);
+
+    isActive = !isActive;
 }
 
 const QString &BackupListModel::getAddedFile(int index) const

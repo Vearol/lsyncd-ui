@@ -32,17 +32,20 @@ public:
 
 public:
     Q_INVOKABLE void addItems(const QList<QUrl> &urls);  
-    Q_INVOKABLE void addSingle(const QString &path);
     Q_INVOKABLE void removeAll();
     Q_INVOKABLE void removeSingle(int index);
     Q_INVOKABLE bool isEmpty();
 
-    Q_INVOKABLE void removeBackupPath(const QString &path);
     Q_INVOKABLE bool isFullBackup(const QString &path) const;
     Q_INVOKABLE bool isPartialBackup(const QString &path) const;
+    Q_INVOKABLE void switchPath(const QString &path);
 
     const QString &getAddedPath(int index) const;
     const QString &getAddedFile(int index) const;
+
+private:
+    void addSingle(const QString &path);
+    void removeBackupPath(const QString &path);
 
 signals:
     void rowCountIsChanged();
