@@ -57,7 +57,7 @@ Window {
         folder: shortcuts.home
         selectFolder: true
         onAccepted: {
-            backupModel.addItems(folderDialog.fileUrls)
+            backupModel.addItems(folderDialog.fileUrls, true)
         }
     }
 
@@ -247,7 +247,7 @@ Window {
                         itemDelegate: Rectangle {
                             id: delegateRectangle
                             property string fullPath: fileSystemModel.getFilePath(styleData.index)
-                            property bool isPartialBackup: backupModel.isPartialBackup(delegateRectangle.fullPath)
+                            property bool disabledPath: (model.isFullBackup && !model.isInTheTree)
                             color: ( styleData.row % 2 == 0 ) ? Colors.buttonsPanelColor : Colors.applicationListColor
                             height: 25
 
@@ -255,8 +255,17 @@ Window {
                                 id: chooseIcon
                                 anchors.left: parent.left
                                 anchors.leftMargin: 25
-                                iconColor: model.isInTheTree ? Colors.blueActiveColor: Colors.disabledTextColor
-                                isFilled: isPartialBackup || model.isInTheTree
+                                iconColor: {
+                                    if (delegateRectangle.disabledPath) {
+                                        return "transparent";
+                                    }
+                                    else {
+                                        model.isInTheTree ? Colors.blueActiveColor: Colors.disabledTextColor
+                                        if (backupModel.isFromTheList(fullPath))
+                                            return Colors.darkGrayColor;
+                                    }
+                                }
+                                isFilled: model.isPartialBackup || model.isInTheTree
                                 anchors.verticalCenter: parent.verticalCenter
                             }
 
@@ -269,8 +278,10 @@ Window {
                                 width: 15
                                 hoverEnabled: true
                                 onClicked: {
+                                if (!delegateRectangle.disabledPath)
                                     fileSystemModel.switchPath(fullPath, styleData.index);
                                 }
+
                             }
 
                             Image {
@@ -281,7 +292,6 @@ Window {
                                 sourceSize.height: parent.height * 0.6
                                 sourceSize.width: parent.height * 0.6
                                 anchors.verticalCenter: parent.verticalCenter
-                                //source: isfile ? Images.fileUrl : Images.folderUrl
                                 cache: true
                             }
 
@@ -291,10 +301,15 @@ Window {
                                 anchors.leftMargin: 5
                                 color: {
                                     var treeTextColor = Colors.pathTextColor;
-                                    if (selectCircle.containsMouse){
-                                        treeTextColor = Colors.blueActiveColor;
+                                    if (delegateRectangle.disabledPath) {
+                                        treeTextColor = Colors.disabledTextColor;
                                     }
-                                    return treeTextColor
+                                    else {
+                                        if (selectCircle.containsMouse){
+                                            treeTextColor = Colors.blueActiveColor;
+                                        }
+                                        return treeTextColor
+                                    }
                                 }
 
                                 text: styleData.value

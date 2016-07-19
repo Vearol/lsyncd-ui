@@ -12,7 +12,9 @@ public:
 
 public:
     enum TreeViewModel_Roles {
-        IsInTheTreeRole = Qt::DisplayRole + 10
+        IsInTheTreeRole = Qt::DisplayRole + 10,
+        IsPartialBackup,
+        IsFullBackup
     };
 
     Q_INVOKABLE QString getFilePath(const QModelIndex &index) const { return QFileSystemModel::filePath(index); }

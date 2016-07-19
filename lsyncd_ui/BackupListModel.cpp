@@ -51,14 +51,14 @@ QHash<int, QByteArray> BackupListModel::roleNames() const
     return roles;
 }
 
-void BackupListModel::addItems(const QList<QUrl> &urls)
+void BackupListModel::addItems(const QList<QUrl> &urls, bool areFromList)
 {
-    doAddItems(urls);
+    doAddItems(urls, areFromList);
 }
 
 void BackupListModel::addSingle(const QString &path)
 {
-    addItems(QList<QUrl>() << QUrl::fromLocalFile(path));
+    addItems(QList<QUrl>() << QUrl::fromLocalFile(path), false);
     m_BackupTree.addBackupPath(path);
 }
 
@@ -119,6 +119,11 @@ bool BackupListModel::isInTheTree(const QString &path) const
     return m_BackupTree.isInTheTree(path);
 }
 
+bool BackupListModel::isFromTheList(const QString &path)
+{
+    return listPaths.contains(path);
+}
+
 void BackupListModel::switchPath(const QString &path)
 {
     if (isInTheTree(path)) {
@@ -135,7 +140,7 @@ void BackupListModel::switchPath(const QString &path)
     }
 }
 
-void BackupListModel::doAddItems(const QList<QUrl> &urls) {
+void BackupListModel::doAddItems(const QList<QUrl> &urls, bool areFromList) {
     int size = urls.size();
     int existingSize = m_BackupItems.size();
 
@@ -146,6 +151,7 @@ void BackupListModel::doAddItems(const QList<QUrl> &urls) {
         if (!m_AddedPaths.contains(path) && !originalPaths.contains(path)) {
             originalPaths.insert(path);
             m_BackupTree.addBackupPath(path);
+            if (areFromList) listPaths.insert(path);
         }
     }
 

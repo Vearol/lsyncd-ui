@@ -19,6 +19,14 @@ QVariant TreeViewModel::data(const QModelIndex &index, int role) const {
         QString filepath = getFilePath(index);
         return m_BackupModel->isInTheTree(filepath);
     }
+    case IsPartialBackup: {
+        QString filepath = getFilePath(index);
+        return m_BackupModel->isPartialBackup(filepath);
+    }
+    case IsFullBackup:{
+        QString filepath = getFilePath(index);
+        return m_BackupModel->isFullBackup(filepath);
+    }
     default:
         return QFileSystemModel::data(index, role);
     }
@@ -27,5 +35,7 @@ QVariant TreeViewModel::data(const QModelIndex &index, int role) const {
 QHash<int, QByteArray> TreeViewModel::roleNames() const {
     QHash<int, QByteArray> names = QFileSystemModel::roleNames();
     names[IsInTheTreeRole] = "isInTheTree";
+    names[IsPartialBackup] = "isPartialBackup";
+    names[IsFullBackup] = "isFullBackup";
     return names;
 }
