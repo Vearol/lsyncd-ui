@@ -4,7 +4,7 @@ import QtQuick.Controls.Styles 1.4
 import "Colors.js" as Colors;
 
 TreeView {
-    style: TreeViewStyle{
+    style: TreeViewStyle {
         alternateBackgroundColor: Colors.buttonsPanelColor
         backgroundColor: Colors.applicationListColor
         rowDelegate: Rectangle {

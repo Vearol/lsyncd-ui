@@ -212,7 +212,8 @@ Window {
                             anchors.fill: parent
 
                             onClicked: {
-                                tabView.currentIndex = index
+                                tabView.currentIndex = index;
+                                //fileSystemModel.updateModel();
                             }
                         }
                     }
@@ -247,8 +248,8 @@ Window {
                         itemDelegate: Rectangle {
                             id: delegateRectangle
                             property string fullPath: fileSystemModel.getFilePath(styleData.index)
-                            property bool disabledPath: (model.isFullBackup && !model.isInTheTree)
-                            color: ( styleData.row % 2 == 0 ) ? Colors.buttonsPanelColor : Colors.applicationListColor
+                            property bool disabledPath: model ? (model.isFullBackup && !model.isInTheTree) : false
+                            color: (styleData.row % 2 == 0) ? Colors.buttonsPanelColor : Colors.applicationListColor
                             height: 25
 
                             ElCircle {
@@ -256,16 +257,17 @@ Window {
                                 anchors.left: parent.left
                                 anchors.leftMargin: 25
                                 iconColor: {
+                                    var circleColor;
                                     if (delegateRectangle.disabledPath) {
-                                        return "transparent";
-                                    }
-                                    else {
-                                        model.isInTheTree ? Colors.blueActiveColor: Colors.disabledTextColor
+                                        circleColor = "transparent";
+                                    } else {
                                         if (backupModel.isFromTheList(fullPath))
                                             return Colors.darkGrayColor;
+                                        else
+                                            return (model && model.isInTheTree) ? Colors.blueActiveColor : Colors.disabledTextColor
                                     }
                                 }
-                                isFilled: model.isPartialBackup || model.isInTheTree
+                                isFilled: model ? (model.isPartialBackup || model.isInTheTree) : false
                                 anchors.verticalCenter: parent.verticalCenter
                             }
 
@@ -279,9 +281,8 @@ Window {
                                 hoverEnabled: true
                                 onClicked: {
                                 if (!delegateRectangle.disabledPath)
-                                    fileSystemModel.switchPath(fullPath, styleData.index);
+                                    fileSystemModel.switchPath(styleData.index);
                                 }
-
                             }
 
                             Image {
@@ -319,7 +320,6 @@ Window {
                         TableViewColumn {
                             role: "fileName"
                         }
-
                     }
                 }
             }
