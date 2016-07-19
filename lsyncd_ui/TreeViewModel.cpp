@@ -9,6 +9,8 @@ TreeViewModel::TreeViewModel(BackupListModel *backupModel, QObject *parent):
 void TreeViewModel::switchPath(const QString &path, const QModelIndex &currentIndex) {
     m_BackupModel->switchPath(path);
     emit dataChanged(currentIndex, currentIndex, QVector<int>());
+    emit dataChanged(parent(currentIndex), parent(currentIndex), QVector<int>());
+
 }
 
 QVariant TreeViewModel::data(const QModelIndex &index, int role) const {
