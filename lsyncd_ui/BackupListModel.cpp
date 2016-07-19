@@ -114,9 +114,14 @@ bool BackupListModel::isPartialBackup(const QString &path) const
     return m_BackupTree.isPartialBackup(path);
 }
 
+bool BackupListModel::isInTheTree(const QString &path) const
+{
+    return m_BackupTree.isInTheTree(path);
+}
+
 void BackupListModel::switchPath(const QString &path)
 {
-    if (isFullBackup(path)) {
+    if (isInTheTree(path)) {
         int size = m_BackupItems.size();
         for (int i = 0; i < size; i++){
             if (m_BackupItems[i]->getBackupPath() == path){
@@ -130,11 +135,6 @@ void BackupListModel::switchPath(const QString &path)
     }
 }
 
-const QString &BackupListModel::getAddedFile(int index) const
-{
-    return m_FileNames[index];
-}
-
 void BackupListModel::doAddItems(const QList<QUrl> &urls) {
     int size = urls.size();
     int existingSize = m_BackupItems.size();
@@ -145,7 +145,6 @@ void BackupListModel::doAddItems(const QList<QUrl> &urls) {
         QString path = urls[i].toLocalFile();
         if (!m_AddedPaths.contains(path) && !originalPaths.contains(path)) {
             originalPaths.insert(path);
-            m_FileNames.push_back(urls[i].fileName());
             m_BackupTree.addBackupPath(path);
         }
     }

@@ -8,15 +8,23 @@ class TreeViewModel: public QFileSystemModel
 {
     Q_OBJECT
 public:
-    TreeViewModel();
+    TreeViewModel(BackupListModel *backupModel, QObject *parent=nullptr);
 
-    void copyBackupElementsForTree(BackupListModel *BackupElements);
+public:
+    enum TreeViewModel_Roles {
+        IsInTheTreeRole = Qt::DisplayRole + 10
+    };
 
-    Q_INVOKABLE bool isAdded(const QString &filePath);
     Q_INVOKABLE QString getFilePath(const QModelIndex &index) const { return QFileSystemModel::filePath(index); }
+    Q_INVOKABLE void switchPath(const QString &path, const QModelIndex &currentIndex);
+
+    // QAbstractItemModel interface
+public:
+    virtual QVariant data(const QModelIndex &index, int role) const;
+    virtual QHash<int, QByteArray> roleNames() const;
 
 private:
-    BackupListModel *m_BackupElements;
+    BackupListModel *m_BackupModel;
 };
 
 #endif // TREEVIEWMODEL_H

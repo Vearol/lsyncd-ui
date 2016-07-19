@@ -38,7 +38,8 @@ public:
 
     Q_INVOKABLE bool isFullBackup(const QString &path) const;
     Q_INVOKABLE bool isPartialBackup(const QString &path) const;
-    Q_INVOKABLE void switchPath(const QString &path);
+    Q_INVOKABLE bool isInTheTree(const QString &path) const;
+    /*Q_INVOKABLE*/ void switchPath(const QString &path);
 
     const QString &getAddedPath(int index) const;
     const QString &getAddedFile(int index) const;
@@ -54,7 +55,6 @@ signals:
 private:
     QVector<BackupItem*> m_BackupItems;
     QSet<QString> m_AddedPaths;
-    QVector<QString> m_FileNames;
     BackupTree m_BackupTree;
 };
 

@@ -1,25 +1,31 @@
 #include "TreeViewModel.h"
 
-TreeViewModel::TreeViewModel()
+TreeViewModel::TreeViewModel(BackupListModel *backupModel, QObject *parent):
+    QFileSystemModel(parent),
+    m_BackupModel(backupModel)
 {
 }
 
-void TreeViewModel::copyBackupElementsForTree(BackupListModel *BackupElements)
-{
-    m_BackupElements = BackupElements;
+void TreeViewModel::switchPath(const QString &path, const QModelIndex &currentIndex) {
+    m_BackupModel->switchPath(path);
+    emit dataChanged(currentIndex, currentIndex, QVector<int>());
 }
 
-bool TreeViewModel::isAdded(const QString &filePath)
-{
-    bool isAdded = false;
-    int size = m_BackupElements->rowCount();
+QVariant TreeViewModel::data(const QModelIndex &index, int role) const {
+    if (!index.isValid()) { return QVariant(); }
 
-    for (int i = 0; i < size; i++){
-        if (m_BackupElements->getAddedFile(i) == filePath)
-            isAdded = true;
+    switch (role) {
+    case IsInTheTreeRole: {
+        QString filepath = getFilePath(index);
+        return m_BackupModel->isInTheTree(filepath);
     }
-
-    return isAdded;
+    default:
+        return QFileSystemModel::data(index, role);
+    }
 }
 
-
+QHash<int, QByteArray> TreeViewModel::roleNames() const {
+    QHash<int, QByteArray> names = QFileSystemModel::roleNames();
+    names[IsInTheTreeRole] = "isInTheTree";
+    return names;
+}

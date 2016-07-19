@@ -247,22 +247,20 @@ Window {
                         itemDelegate: Rectangle {
                             id: delegateRectangle
                             property string fullPath: fileSystemModel.getFilePath(styleData.index)
+                            property bool isPartialBackup: backupModel.isPartialBackup(delegateRectangle.fullPath)
                             color: ( styleData.row % 2 == 0 ) ? Colors.buttonsPanelColor : Colors.applicationListColor
                             height: 25
 
                             ElCircle {
-                                property bool isFullBackup: backupModel.isFullBackup(delegateRectangle.fullPath)
-                                property bool isPartialBackup: backupModel.isPartialBackup(delegateRectangle.fullPath)
                                 id: chooseIcon
                                 anchors.left: parent.left
                                 anchors.leftMargin: 25
-                                iconColor: isFullBackup ? Colors.blueActiveColor: Colors.disabledTextColor
-                                isFilled: isPartialBackup || isFullBackup
+                                iconColor: model.isInTheTree ? Colors.blueActiveColor: Colors.disabledTextColor
+                                isFilled: isPartialBackup || model.isInTheTree
                                 anchors.verticalCenter: parent.verticalCenter
                             }
 
                             MouseArea {
-                                property string pathFromTree: fileSystemModel.getFilePath(styleData.index)
                                 id: selectCircle
                                 anchors.top: parent.top
                                 anchors.bottom: parent.bottom
@@ -271,7 +269,7 @@ Window {
                                 width: 15
                                 hoverEnabled: true
                                 onClicked: {
-                                    backupModel.switchPath(fullPath);
+                                    fileSystemModel.switchPath(fullPath, styleData.index);
                                 }
                             }
 

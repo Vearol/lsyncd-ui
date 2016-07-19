@@ -12,10 +12,9 @@ int main(int argc, char *argv[])
 
     BackupListModel model;
     LsyncdConfigModel lsmodel;
-    TreeViewModel fsmodel;
+    TreeViewModel fsmodel(&model);
 
     lsmodel.copyBackupElementsForConfig(&model);
-    fsmodel.copyBackupElementsForTree(&model);
     fsmodel.setRootPath("/");
     fsmodel.setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
 
