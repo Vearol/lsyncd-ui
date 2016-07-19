@@ -112,9 +112,31 @@ void FileSystemTreeTest::addParentPathTest() {
     QVERIFY(tree.isInTheTree("/k/l/m"));
 }
 
-void FileSystemTreeTest::ancestorPathTest() {
+void FileSystemTreeTest::simpleAddRootTest() {
     BackupTree tree;
-    tree.addBackupPath("/a");
+    tree.addBackupPath("/");
 
-    QCOMPARE(tree.retrieveFirstAncestor("/a/b/c"), QLatin1String("/a"));
+    QVERIFY(tree.isFullBackup("/"));
+    QVERIFY(tree.isInTheTree("/"));
+    QVERIFY(!tree.isPartialBackup("/"));
+}
+
+void FileSystemTreeTest::addRootTest() {
+    BackupTree tree;
+
+    tree.addBackupPath("/a/b/c");
+
+    QVERIFY(tree.isFullBackup("/"));
+    QVERIFY(tree.isInTheTree("/"));
+    QVERIFY(!tree.isPartialBackup("/"));
+}
+
+void FileSystemTreeTest::addRootRemovesChildrenTest() {
+    BackupTree tree;
+
+    tree.addBackupPath("/a/b/c");
+    tree.addBackupPath("/");
+
+    QVERIFY(tree.isFullBackup("/a/b/c"));
+    QVERIFY(!tree.isInTheTree("/a/b/c"));
 }

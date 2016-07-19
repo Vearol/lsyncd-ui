@@ -30,7 +30,6 @@ public:
     bool isFullBackup(const QString &path) const;
     bool isPartialBackup(const QString &path) const;
     bool isInTheTree(const QString &path) const;
-    QString retrieveFirstAncestor(const QString &childPath) const;
 
 private:
     BackupTreeNode *findNode(const QString &path, std::vector<BackupTreeNode*> &descentPath,
