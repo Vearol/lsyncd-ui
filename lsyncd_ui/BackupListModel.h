@@ -31,7 +31,7 @@ public:
     virtual QHash<int, QByteArray> roleNames() const;
 
 public:
-    Q_INVOKABLE void addItems(const QList<QUrl> &urls, bool areFromList);
+    Q_INVOKABLE void addItems(const QList<QUrl> &urls);
     Q_INVOKABLE void removeAll();
     Q_INVOKABLE void removeSingle(int index);
     Q_INVOKABLE bool isEmpty();
@@ -39,14 +39,13 @@ public:
     Q_INVOKABLE bool isFullBackup(const QString &path) const;
     Q_INVOKABLE bool isPartialBackup(const QString &path) const;
     Q_INVOKABLE bool isInTheTree(const QString &path) const;
-    Q_INVOKABLE bool isFromTheList(const QString &path);
 
     const QString &getAddedPath(int index) const;
     const QString &getAddedFile(int index) const;
     void switchPath(const QString &path);
 
 private:
-    void doAddItems(const QList<QUrl> &urls, bool areFromList);
+    void doAddItems(const QList<QUrl> &urls);
     void addSingle(const QString &path);
     void removeBackupPath(const QString &path);
 
@@ -58,7 +57,6 @@ private:
     QVector<BackupItem*> m_BackupItems;
     QSet<QString> m_AddedPaths;
     BackupTree m_BackupTree;
-    QSet<QString> listPaths;
 };
 
 
