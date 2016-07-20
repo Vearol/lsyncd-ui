@@ -19,12 +19,17 @@ public:
 
     Q_INVOKABLE QString getFilePath(const QModelIndex &index) const { return QFileSystemModel::filePath(index); }
     Q_INVOKABLE void switchPath(const QModelIndex &currentIndex);
-    Q_INVOKABLE void updateModel();
+
+public slots:
+    void onPathAdded(const QString &path);
 
     // QAbstractItemModel interface
 public:
     virtual QVariant data(const QModelIndex &index, int role) const;
     virtual QHash<int, QByteArray> roleNames() const;
+
+private:
+    void updatePathByIndex(const QModelIndex &currentIndex);
 
 private:
     BackupListModel *m_BackupModel;

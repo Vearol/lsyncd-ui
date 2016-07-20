@@ -131,13 +131,12 @@ void BackupListModel::switchPath(const QString &path)
     if (isInTheTree(path)) {
         int size = m_BackupItems.size();
         for (int i = 0; i < size; i++){
-            if (m_BackupItems[i]->getBackupPath() == path){
+            if (m_BackupItems[i]->getBackupPath() == path) {
                 removeSingle(i);
                 break;
             }
         }
-    }
-    else {
+    } else {
         addSingle(path);
     }
 }
@@ -156,11 +155,11 @@ void BackupListModel::doAddItems(const QList<QUrl> &urls, bool areFromList) {
             if (urlPath.startsWith(m_BackupItems[j]->getBackupPath())){
                 newPathIsNotChild = false;
             }
+
             if (m_BackupItems[j]->isChildOf(urlPath)){
                 removeSingle(j);
                 existingSize--;
             }
-
         }
 
         if (newPathIsNotChild){
@@ -185,6 +184,7 @@ void BackupListModel::doAddItems(const QList<QUrl> &urls, bool areFromList) {
 
             m_AddedPaths.insert(path);
             m_BackupItems.push_back(new BackupItem(path));
+            emit pathAdded(path);
 
             ++it;
         }

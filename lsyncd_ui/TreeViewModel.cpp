@@ -1,4 +1,5 @@
 #include "TreeViewModel.h"
+#include <QDebug>
 
 TreeViewModel::TreeViewModel(BackupListModel *backupModel, QObject *parent):
     QFileSystemModel(parent),
@@ -7,23 +8,17 @@ TreeViewModel::TreeViewModel(BackupListModel *backupModel, QObject *parent):
 }
 
 void TreeViewModel::switchPath(const QModelIndex &currentIndex) {
-    QString path = this->filePath(currentIndex);
-    if (path == rootPath())
-        m_BackupModel->switchPath(rootPath());
-    else
-        m_BackupModel->switchPath(path);
+    if (!currentIndex.isValid()) { return; }
 
-    emit dataChanged(currentIndex, currentIndex, QVector<int>());
-    emit dataChanged(parent(currentIndex), parent(currentIndex), QVector<int>());
+    QString path = this->filePath(currentIndex);
+    m_BackupModel->switchPath(path);
+
+    this->updatePathByIndex(currentIndex);
 }
 
-void TreeViewModel::updateModel()
-{
-    /*int size = m_BackupModel->rowCount();
-    if (size != 0) {
-        QString last = m_BackupModel->getAddedPath(size - 1);
-        emit dataChanged (index(rootPath()), index(last), QVector<int>());
-    }*/
+void TreeViewModel::onPathAdded(const QString &path) {
+    auto currIndex = this->index(path);
+    this->updatePathByIndex(currIndex);
 }
 
 QVariant TreeViewModel::data(const QModelIndex &index, int role) const {
@@ -45,4 +40,17 @@ QHash<int, QByteArray> TreeViewModel::roleNames() const {
     names[IsPartialBackupRole] = "isPartialBackup";
     names[IsFullBackupRole] = "isFullBackup";
     return names;
+}
+
+void TreeViewModel::updatePathByIndex(const QModelIndex &currentIndex) {
+    Q_ASSERT(currentIndex.isValid());
+
+    QVector<int> rolesToUpdate;
+    rolesToUpdate << IsInTheTreeRole << IsPartialBackupRole << IsFullBackupRole;
+    auto curr = currentIndex;
+
+    do {
+        emit dataChanged(curr, curr, rolesToUpdate);
+        curr = this->parent(curr);
+    } while (curr.isValid());
 }

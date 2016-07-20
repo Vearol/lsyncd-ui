@@ -213,7 +213,6 @@ Window {
 
                             onClicked: {
                                 tabView.currentIndex = index;
-                                //fileSystemModel.updateModel();
                             }
                         }
                     }

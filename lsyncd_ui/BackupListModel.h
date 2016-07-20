@@ -52,6 +52,7 @@ private:
 
 signals:
     void rowCountIsChanged();
+    void pathAdded(const QString &path);
 
 private:
     QVector<BackupItem*> m_BackupItems;

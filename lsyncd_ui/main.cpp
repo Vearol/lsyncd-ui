@@ -7,7 +7,7 @@
 #include "TreeViewModel.h"
 
 int main(int argc, char *argv[]) {
-    QApplication app(argc, argv);
+    QApplication app(argc, argv);\
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
     qSetMessagePattern("%{time hh:mm:ss.zzz} %{type} T#%{threadid} %{function} - %{message}");
@@ -16,6 +16,9 @@ int main(int argc, char *argv[]) {
     BackupListModel model;
     LsyncdConfigModel lsmodel;
     TreeViewModel fsmodel(&model);
+
+    QObject::connect(&model, SIGNAL(pathAdded(QString)),
+                     &fsmodel, SLOT(onPathAdded(QString)));
 
     lsmodel.copyBackupElementsForConfig(&model);
     fsmodel.setRootPath("/");
