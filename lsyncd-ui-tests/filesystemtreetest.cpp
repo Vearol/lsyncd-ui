@@ -124,11 +124,15 @@ void FileSystemTreeTest::simpleAddRootTest() {
 void FileSystemTreeTest::addRootTest() {
     BackupTree tree;
 
+    QVERIFY(!tree.isFullBackup("/"));
+    QVERIFY(!tree.isInTheTree("/"));
+    QVERIFY(!tree.isPartialBackup("/"));
+
     tree.addBackupPath("/a/b/c");
 
-    QVERIFY(tree.isFullBackup("/"));
-    QVERIFY(tree.isInTheTree("/"));
-    QVERIFY(!tree.isPartialBackup("/"));
+    QVERIFY(!tree.isFullBackup("/"));
+    QVERIFY(!tree.isInTheTree("/"));
+    QVERIFY(tree.isPartialBackup("/"));
 }
 
 void FileSystemTreeTest::addRootRemovesChildrenTest() {

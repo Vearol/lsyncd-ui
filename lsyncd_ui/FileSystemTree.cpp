@@ -28,7 +28,9 @@ void deleteNode(BackupTreeNode *nodeToDelete) {
     delete nodeToDelete;
 }
 
-BackupTree::BackupTree() {
+BackupTree::BackupTree():
+    m_RootIsAdded(false)
+{
     m_Root = new BackupTreeNode("");
 }
 
@@ -37,6 +39,64 @@ BackupTree::~BackupTree() {
 }
 
 void BackupTree::addBackupPath(const QString &path) {
+    if (path != "/") {
+        doAddBackupPath(path);
+    } else {
+        m_RootIsAdded = true;
+    }
+}
+
+void BackupTree::removeBackupPath(const QString &path) {
+    if (path != "/") {
+        doRemoveBackupPath(path);
+    } else {
+        if (m_RootIsAdded) {
+            m_RootIsAdded = false;
+            // return status
+        }
+    }
+}
+
+bool BackupTree::isFullBackup(const QString &path) const {
+    if (path == "/") { return m_RootIsAdded; }
+
+    bool processedAll = false;
+    std::vector<BackupTreeNode*> descentPath;
+    auto *node = findNode(path, descentPath, processedAll);
+
+    bool isFull = false;
+    if (node != nullptr) {
+        if (node->m_Child == nullptr) {
+            isFull = true;
+        } else if (processedAll) {
+            isFull = false;
+        }
+    }
+
+    return isFull;
+}
+
+bool BackupTree::isPartialBackup(const QString &path) const {
+    if (path == "/") { return !m_RootIsAdded && (m_Root->m_Child != nullptr); }
+
+    bool processedAll = false;
+    std::vector<BackupTreeNode*> descentPath;
+    auto *node = findNode(path, descentPath, processedAll);
+    return (node != nullptr) && (processedAll && (node->m_Child != nullptr));
+}
+
+bool BackupTree::isInTheTree(const QString &path) const {
+    if (path == "/") { return m_RootIsAdded; }
+    if (m_RootIsAdded) { return false; }
+
+    bool processedAll = false;
+    std::vector<BackupTreeNode*> descentPath;
+    auto *node = findNode(path, descentPath, processedAll);
+    bool result = (node != nullptr) && (node->m_Child == nullptr) && processedAll;
+    return result;
+}
+
+void BackupTree::doAddBackupPath(const QString &path) {
     QStringList parts = path.split(QDir::separator(), QString::SkipEmptyParts);
 
     BackupTreeNode *node = m_Root->m_Child;
@@ -81,45 +141,13 @@ void BackupTree::addBackupPath(const QString &path) {
     }
 }
 
-void BackupTree::removeBackupPath(const QString &path) {
+void BackupTree::doRemoveBackupPath(const QString &path) {
     QStringList parts = path.split(QDir::separator(), QString::SkipEmptyParts);
 
     BackupTreeNode *node = m_Root->m_Child;
     BackupTreeNode *parent = m_Root;
 
     doDeleteNode(node, parent, parts, 0);
-}
-
-bool BackupTree::isFullBackup(const QString &path) const {
-    bool processedAll = false;
-    std::vector<BackupTreeNode*> descentPath;
-    auto *node = findNode(path, descentPath, processedAll);
-
-    bool isFull = false;
-    if (node != nullptr) {
-        if (node->m_Child == nullptr) {
-            isFull = true;
-        } else if (processedAll) {
-            isFull = false;
-        }
-    }
-
-    return isFull;
-}
-
-bool BackupTree::isPartialBackup(const QString &path) const {
-    bool processedAll = false;
-    std::vector<BackupTreeNode*> descentPath;
-    auto *node = findNode(path, descentPath, processedAll);
-    return (node != nullptr) && (processedAll && (node->m_Child != nullptr));
-}
-
-bool BackupTree::isInTheTree(const QString &path) const {
-    bool processedAll = false;
-    std::vector<BackupTreeNode*> descentPath;
-    auto *node = findNode(path, descentPath, processedAll);
-    bool result = (node != nullptr) && (node->m_Child == nullptr) && processedAll;
-    return result;
 }
 
 BackupTreeNode *BackupTree::findNode(const QString &path, std::vector<BackupTreeNode *> &descentPath, bool &processedAll) const {

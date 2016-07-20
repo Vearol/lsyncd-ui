@@ -32,6 +32,8 @@ public:
     bool isInTheTree(const QString &path) const;
 
 private:
+    void doAddBackupPath(const QString &path);
+    void doRemoveBackupPath(const QString &path);
     BackupTreeNode *findNode(const QString &path, std::vector<BackupTreeNode*> &descentPath,
                              bool &processedAll) const;
     void doDeleteNode(BackupTreeNode *nodeToLookIn, BackupTreeNode *parent,
@@ -40,6 +42,7 @@ private:
 
 private:
     BackupTreeNode *m_Root;
+    bool m_RootIsAdded;
 };
 
 #endif // FILESYSTEMTREE_H
