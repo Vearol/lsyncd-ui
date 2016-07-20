@@ -6,9 +6,12 @@
 #include "LsyncdConfigModel.h"
 #include "TreeViewModel.h"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
+    qSetMessagePattern("%{time hh:mm:ss.zzz} %{type} T#%{threadid} %{function} - %{message}");
+#endif
 
     BackupListModel model;
     LsyncdConfigModel lsmodel;
