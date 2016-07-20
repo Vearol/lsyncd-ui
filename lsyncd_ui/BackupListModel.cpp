@@ -73,6 +73,7 @@ void BackupListModel::removeAll()
     }
     m_BackupItems.clear();
     m_AddedPaths.clear();
+    listPaths.clear();
 
     endResetModel();
 
@@ -88,6 +89,7 @@ void BackupListModel::removeSingle(int index)
     BackupItem *itemToRemove = m_BackupItems.takeAt(index);
     delete itemToRemove;
     m_AddedPaths.remove(pathToRemove);
+    listPaths.remove(pathToRemove);
 
     endRemoveRows();
 
@@ -146,35 +148,51 @@ void BackupListModel::doAddItems(const QList<QUrl> &urls, bool areFromList) {
 
     QSet<QString> originalPaths;
     originalPaths.reserve(size);
-    for (int i = 0; i <  size; i++){
-        QString path = urls[i].toLocalFile();
-        if (!m_AddedPaths.contains(path) && !originalPaths.contains(path)) {
-            originalPaths.insert(path);
-            m_BackupTree.addBackupPath(path);
-            if (areFromList) listPaths.insert(path);
+
+    bool newPathIsNotChild = true;
+    for (int i = 0; i < size; i++){
+        for (int j = 0; j < existingSize; j++){
+            QString urlPath = urls[i].toLocalFile();
+            if (urlPath.startsWith(m_BackupItems[j]->getBackupPath())){
+                newPathIsNotChild = false;
+            }
+            if (m_BackupItems[j]->isChildOf(urlPath)){
+                removeSingle(j);
+                existingSize--;
+            }
+
         }
+
+        if (newPathIsNotChild){
+            QString path = urls[i].toLocalFile();
+            if (!m_AddedPaths.contains(path) && !originalPaths.contains(path)) {
+                originalPaths.insert(path);
+                m_BackupTree.addBackupPath(path);
+                if (areFromList) listPaths.insert(path);
+            }
+        }
+
+        int k = originalPaths.size();
+        m_BackupItems.reserve(existingSize + k);
+        m_AddedPaths.reserve(existingSize + k);
+
+        beginInsertRows(QModelIndex(), existingSize, existingSize + k - 1);
+
+        QSet<QString>::const_iterator it = originalPaths.constBegin();
+        QSet<QString>::const_iterator end = originalPaths.constEnd();
+        while (it != end) {
+            const QString &path = *it;
+
+            m_AddedPaths.insert(path);
+            m_BackupItems.push_back(new BackupItem(path));
+
+            ++it;
+        }
+
+        endInsertRows();
+
+        emit rowCountIsChanged();
     }
-
-    int k = originalPaths.size();
-    m_BackupItems.reserve(existingSize + k);
-    m_AddedPaths.reserve(existingSize + k);
-
-    beginInsertRows(QModelIndex(), existingSize, existingSize + k - 1);
-
-    QSet<QString>::const_iterator i = originalPaths.constBegin();
-    QSet<QString>::const_iterator end = originalPaths.constEnd();
-    while (i != end) {
-        const QString &path = *i;
-
-        m_AddedPaths.insert(path);
-        m_BackupItems.push_back(new BackupItem(path));
-
-        ++i;
-    }
-
-    endInsertRows();
-
-    emit rowCountIsChanged();
 }
 
 const QString &BackupListModel::getAddedPath(int index) const

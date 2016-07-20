@@ -52,7 +52,7 @@ void ConfigGeneratorTests::generateConfigWithOneItemTest() {
     QList<QUrl> dirsList;
     dirsList << QUrl::fromLocalFile("/home/testuser/dir1");
     lsyncdModel.setBackupPath("/media/Data");
-    listModel.addItems(dirsList);
+    listModel.addItems(dirsList, true);
 
     QStringList configLines;
     configLines << "settings {"
@@ -83,7 +83,7 @@ void ConfigGeneratorTests::generateConfigWithSeveralItemsTest() {
     dirsList << QUrl::fromLocalFile("/home/testuser/dir1")
              << QUrl::fromLocalFile("/home/testuser/another/sophisticated/dir");
     lsyncdModel.setBackupPath("/media/Data");
-    listModel.addItems(dirsList);
+    listModel.addItems(dirsList, true);
 
     QStringList configLines;
     configLines << "settings {"

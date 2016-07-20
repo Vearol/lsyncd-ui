@@ -11,3 +11,8 @@ BackupItem::BackupItem(const QString &path):
         m_ItemType = BackupTypeDirectory;
     }
 }
+
+bool BackupItem::isChildOf(const QString &path)
+{
+    return this->getBackupPath().startsWith(path);
+}
