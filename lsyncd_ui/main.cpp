@@ -17,8 +17,8 @@ int main(int argc, char *argv[]) {
     LsyncdConfigModel lsmodel;
     TreeViewModel fsmodel(&model);
 
-    QObject::connect(&model, SIGNAL(pathAdded(QString)),
-                     &fsmodel, SLOT(onPathAdded(QString)));
+    QObject::connect(&model, SIGNAL(pathSwitched(QString)),
+                     &fsmodel, SLOT(onPathSwitched(QString)));
 
     lsmodel.copyBackupElementsForConfig(&model);
     fsmodel.setRootPath("/");

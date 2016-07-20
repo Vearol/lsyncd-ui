@@ -16,7 +16,7 @@ void TreeViewModel::switchPath(const QModelIndex &currentIndex) {
     this->updatePathByIndex(currentIndex);
 }
 
-void TreeViewModel::onPathAdded(const QString &path) {
+void TreeViewModel::onPathSwitched(const QString &path) {
     auto currIndex = this->index(path);
     this->updatePathByIndex(currIndex);
 }

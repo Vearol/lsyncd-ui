@@ -260,10 +260,7 @@ Window {
                                     if (delegateRectangle.disabledPath) {
                                         circleColor = "transparent";
                                     } else {
-                                        if (backupModel.isFromTheList(fullPath))
-                                            return Colors.darkGrayColor;
-                                        else
-                                            return (model && model.isInTheTree) ? Colors.blueActiveColor : Colors.disabledTextColor
+                                        return (model && model.isInTheTree) ? Colors.blueActiveColor : Colors.disabledTextColor
                                     }
                                 }
                                 isFilled: model ? (model.isPartialBackup || model.isInTheTree) : false

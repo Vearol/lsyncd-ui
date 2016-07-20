@@ -21,7 +21,7 @@ public:
     Q_INVOKABLE void switchPath(const QModelIndex &currentIndex);
 
 public slots:
-    void onPathAdded(const QString &path);
+    void onPathSwitched(const QString &path);
 
     // QAbstractItemModel interface
 public:

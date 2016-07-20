@@ -90,6 +90,7 @@ void BackupListModel::removeSingle(int index)
     delete itemToRemove;
     m_AddedPaths.remove(pathToRemove);
     listPaths.remove(pathToRemove);
+    emit pathSwitched(pathToRemove);
 
     endRemoveRows();
 
@@ -184,7 +185,7 @@ void BackupListModel::doAddItems(const QList<QUrl> &urls, bool areFromList) {
 
             m_AddedPaths.insert(path);
             m_BackupItems.push_back(new BackupItem(path));
-            emit pathAdded(path);
+            emit pathSwitched(path);
 
             ++it;
         }
