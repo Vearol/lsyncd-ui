@@ -57,6 +57,7 @@ private:
     QVector<BackupItem*> m_BackupItems;
     QSet<QString> m_AddedPaths;
     BackupTree m_BackupTree;
+    BackupItem* incomingUrl;
 };
 
 

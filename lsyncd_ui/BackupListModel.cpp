@@ -147,7 +147,8 @@ void BackupListModel::doAddItems(const QList<QUrl> &urls) {
     for (int i = 0; i < size; i++){
         for (int j = 0; j < existingSize; j++){
             QString urlPath = urls[i].toLocalFile();
-            if (urlPath.startsWith(m_BackupItems[j]->getBackupPath())){
+            incomingUrl = new BackupItem(urlPath);
+            if (incomingUrl->isChildOf(m_BackupItems[j]->getBackupPath())){
                 newPathIsNotChild = false;
             }
 
