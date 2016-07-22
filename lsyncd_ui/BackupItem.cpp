@@ -27,3 +27,8 @@ bool BackupItem::isChildOf(const QString &path)
     }
     return isChild;
 }
+
+void BackupItem::setBackupPath(const QString &path)
+{
+    this->m_BackupPath = path;
+}

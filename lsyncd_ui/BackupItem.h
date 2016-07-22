@@ -18,6 +18,8 @@ public:
     bool isDirectory() const { return m_ItemType == BackupTypeDirectory; }
     bool isChildOf(const QString &path);
 
+    void setBackupPath(const QString &path);
+
 private:
     QString m_BackupPath;
     BackupType m_ItemType;

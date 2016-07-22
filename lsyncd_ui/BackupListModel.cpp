@@ -139,6 +139,7 @@ void BackupListModel::switchPath(const QString &path)
 void BackupListModel::doAddItems(const QList<QUrl> &urls) {
     int size = urls.size();
     int existingSize = m_BackupItems.size();
+    int firstEntry = existingSize + 1;
 
     QSet<QString> originalPaths;
     originalPaths.reserve(size);
@@ -153,8 +154,18 @@ void BackupListModel::doAddItems(const QList<QUrl> &urls) {
             }
 
             if (m_BackupItems[j]->isChildOf(urlPath)){
-                removeSingle(j);
-                existingSize--;
+                if (j < firstEntry) {
+                    firstEntry = j;
+                    beginResetModel();
+                    QString currentPath = m_BackupItems[j]->getBackupPath();
+                    m_BackupItems[j]->setBackupPath(urlPath);
+                    m_AddedPaths.remove(currentPath);
+                    m_AddedPaths.insert(urlPath);
+                    endResetModel();
+                } else {
+                    removeSingle(j);
+                    existingSize--;
+                }
             }
         }
 
