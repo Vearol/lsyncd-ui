@@ -255,14 +255,7 @@ Window {
                                 id: chooseIcon
                                 anchors.left: parent.left
                                 anchors.leftMargin: 25
-                                iconColor: {
-                                    var circleColor;
-                                    if (delegateRectangle.disabledPath) {
-                                        circleColor = "transparent";
-                                    } else {
-                                        return (model && model.isInTheTree) ? Colors.blueActiveColor : Colors.disabledTextColor
-                                    }
-                                }
+                                iconColor: (model && model.isInTheTree) ? Colors.blueActiveColor : Colors.disabledTextColor
                                 isFilled: model ? (model.isPartialBackup || model.isInTheTree) : false
                                 anchors.verticalCenter: parent.verticalCenter
                             }
@@ -276,8 +269,8 @@ Window {
                                 width: 15
                                 hoverEnabled: true
                                 onClicked: {
-                                if (!delegateRectangle.disabledPath)
-                                    fileSystemModel.switchPath(styleData.index);
+                                    if (!delegateRectangle.disabledPath)
+                                        fileSystemModel.switchPath(styleData.index);
                                 }
                             }
 
@@ -298,16 +291,13 @@ Window {
                                 anchors.leftMargin: 5
                                 color: {
                                     var treeTextColor = Colors.pathTextColor;
-                                    if (delegateRectangle.disabledPath) {
-                                        treeTextColor = Colors.disabledTextColor;
-                                    }
-                                    else {
+
                                         if (selectCircle.containsMouse){
                                             treeTextColor = Colors.blueActiveColor;
                                         }
                                         return treeTextColor
                                     }
-                                }
+
 
                                 text: styleData.value
                             }
